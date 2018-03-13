@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>sl-vue-tree</title>
+  <link rel="stylesheet" href="../dist/sl-vue-tree-dark.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+  <script src="../dist/sl-vue-tree.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+  <h2> Sl-vue-tree - custom dark theme and events handlers</h2>
+
+  <a href="./dark-theme.html" target="_blank">Source code</a>
+  <br><br>
+
+
+  <div class="last-event row">
+    Last event: {{ lastEvent }}
+  </div>
+
+  <div class="row">
+    <div class="tree-container">
+      <sl-vue-tree
+          v-model="nodes"
+          ref="slVueTree"
+          @select="nodeSelected"
+          @drop="nodeDropped"
+          @toggle="nodeToggled"
+      >
+
+        <template slot="title" slot-scope="{ node }">
+          <span class="item-icon">
+            <i class="fa fa-file" v-if="node.isLeaf"></i>
+            <i class="fa fa-folder" v-if="!node.isLeaf"></i>
+          </span>
+
+          {{ node.title }}
+        </template>
+
+
+        <template slot="toggle" slot-scope="{ node }">
+          <span v-if="!node.isLeaf">
+            <i v-if="node.isExpanded" class="fa fa-chevron-down"></i>
+            <i v-if="!node.isExpanded" class="fa fa-chevron-right"></i>
+          </span>
+        </template>
+
+
+        <template slot="sidebar" slot-scope="{ node }">
+          <span class="visible-icon" @click="event => toggleVisibility(event, node)">
+            <i v-if="!node.data || node.data.visible !== false" class="fa fa-eye"></i>
+            <i v-if="node.data && node.data.visible === false" class="fa fa-eye-slash"></i>
+          </span>
+        </template>
+
+      </sl-vue-tree>
+    </div>
+
+
+    <div class="json-preview">
+      <pre>{{ JSON.stringify(nodes, null, 4)}}</pre>
+    </div>
+  </div>
+
+
+</div>
+
+<script>
+  var nodes = [
+    {title: 'Item1', isLeaf: true},
+    {title: 'Item2', isLeaf: true, data: { visible: false }},
+    {title: 'Folder1'},
+    {
+      title: 'Folder2', isExpanded: true, children: [
+        {title: 'Item3', isLeaf: true},
+        {title: 'Item4', isLeaf: true},
+        {
+          title: 'Folder3', children: [
+            {title: 'Item5', isLeaf: true}
+          ]
+        }
+      ]
+    },
+    {title: 'Folder5', isExpanded: false},
+    {title: 'Item6', isLeaf: true},
+    {title: 'Item7', isLeaf: true, data: { visible: false }},
+    {
+      title: 'Folder6', children: [
+        {
+          title: 'Folder7', children: [
+            {title: 'Item8', isLeaf: true},
+            {title: 'Item9', isLeaf: true}
+          ]
+        }
+      ]
+    }
+  ];
+
+  new Vue({
+    el: '#app',
+    components: { SlVueTree: SlVueTree },
+    data: function () {
+     return {
+       nodes: nodes,
+       lastEvent: 'No last event'
+     }
+    },
+    methods: {
+
+      toggleVisibility: function (event, node) {
+        const slVueTree = this.$refs.slVueTree;
+        event.stopPropagation();
+        const visible = !node.data || node.data.visible !== false;
+        slVueTree.updateNode(node, {data: { visible: !visible}});
+        this.lastEvent = `Node ${node.title} is ${ visible ? 'visible' : 'invisible'} now`;
+      },
+
+      nodeSelected(node, event) {
+        this.lastEvent = `Node ${node.title} is selected`;
+      },
+
+      nodeToggled(node, event) {
+        this.lastEvent = `Node ${node.title} is ${ node.isExpanded ? 'expanded' : 'collapsed'}`;
+      },
+
+      nodeDropped(node, position, event) {
+        this.lastEvent = `Node ${node.title} is dropped ${position.placement} ${position.node.title}`;
+      }
+    }
+  })
+</script>
+
+<style>
+
+  body {
+    background: #050d12;
+    font-family: Arial;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  a {
+    color: #bbb;
+  }
+
+  .row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+
+  .last-event {
+    color: white;
+    background-color: rgba(100, 100, 255, 0.5);
+    padding: 10px;
+    border-radius: 2px;
+  }
+
+  .tree-container {
+    flex-grow: 1;
+  }
+
+
+  .json-preview {
+    flex-grow: 1;
+    margin-left: 10px;
+    background-color: #13242d;
+    border: 1px solid black;
+    padding: 10px;
+  }
+
+  .item-icon {
+    display: inline-block;
+    text-align: left;
+    width: 20px;
+  }
+
+
+</style>
+
+</body>
+</html>
