@@ -1,9 +1,8 @@
-
-import Component from 'vue-class-component';
 import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
 
 export interface ISlTreeNodeModel<TDataType> {
-  title: 'string';
+  title: string;
   isLeaf?: boolean;
   children?: ISlTreeNodeModel<TDataType>[];
   isExpanded?: boolean;
@@ -28,49 +27,26 @@ export interface ICursorPosition<TDataType> {
 
 @Component({
   name: 'sl-vue-tree',
-  props: {
-    value: Array,
-    edgeSize: {
-      type: Number,
-      default: 3
-    },
-    showBranches: {
-      type: Boolean,
-      default: false
-    },
-    level: {
-      type: Number,
-      default: 0
-    },
-    parentInd: {
-      type: Number,
-      default: null
-    },
-    allowMultiselect: {
-      type: Boolean,
-      default: true
-    }
-  }
 })
 export default class SlVueTree<TDataType> extends Vue {
 
 
+  @Prop({ default: () => [] as ISlTreeNodeModel<TDataType>[]})
   value: ISlTreeNodeModel<TDataType>[];
 
-
-  // @Prop({ default: 3})
+  @Prop({ default: 3})
   edgeSize: number;
 
-  // @Prop({ default: true})
+  @Prop({ default: true})
   allowMultiselect: boolean;
 
-  // @Prop({ default: false})
+  @Prop({ default: false})
   showBranches: boolean;
 
-  // @Prop({default: 0})
+  @Prop({default: 0})
   level: number;
 
-  // @Prop()
+  @Prop()
   parentInd: number;
 
   // only the root component stores some props
@@ -197,7 +173,7 @@ export default class SlVueTree<TDataType> extends Vue {
       if (node.pathStr === clickedNode.pathStr) {
         nodeModel.isSelected = true;
       } else if (!event.ctrlKey || !this.allowMultiselect) {
-        nodeModel.isSelected = false;
+        if (nodeModel.isSelected) nodeModel.isSelected = false;
       }
     }, newNodes);
 

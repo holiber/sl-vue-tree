@@ -22,8 +22,7 @@ module.exports = {
   },
 
   externals: {
-    'vue': 'Vue',
-    'vue-property-decorator': 'vue-property-decorator'
+    'Vue': 'vue'
   },
 
   module: {

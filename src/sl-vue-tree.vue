@@ -1,5 +1,9 @@
 <template>
-  <div class="sl-vue-tree" @dragover.prevent="event => void 0">
+  <div
+      class="sl-vue-tree"
+      @dragover.prevent="event => void 0"
+      :class="{'sl-vue-tree-root': isRoot }"
+  >
     <div
         class="sl-vue-tree-node" v-for="(node, nodeInd) in nodes"
         :class="{'sl-vue-tree-selected': node.isSelected }"
@@ -75,7 +79,7 @@
 
       <sl-vue-tree
         v-if="node.children && node.children.length && node.isExpanded"
-        v-model="node.children"
+        :value="node.children"
         :level="level + 1"
         :parentInd="nodeInd"
         :allowMultiselect="allowMultiselect"

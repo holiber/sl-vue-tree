@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "draggable tree vue component",
   "main": "dist/sl-vue-tree.js",
+  "types": "dist/sl-vue-tree.d.ts",
   "scripts": {
     "clear": "rm -rf dist",
     "build": "clear && webpack-cli --progress --mode production",
@@ -26,6 +27,7 @@
     "vue": "^2.5.13",
     "vue-class-component": "^6.2.0",
     "vue-loader": "^14.2.1",
+    "vue-property-decorator": "^6.0.0",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10"
