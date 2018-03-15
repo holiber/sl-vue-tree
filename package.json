@@ -22,7 +22,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.10",
     "rimraf": "^2.6.2",
-    "ts-loader": "^4.0.0",
+    "ts-loader": "^4.0.1",
     "typescript": "^2.7.2",
     "vue": "^2.5.13",
     "vue-class-component": "^6.2.0",

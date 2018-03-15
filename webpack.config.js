@@ -17,7 +17,7 @@ module.exports = {
 
 
   resolve: {
-    extensions: ['.js', '.ts'],
+    extensions: ['.js'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
 
@@ -77,7 +77,8 @@ module.exports = {
 
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'src/*.css', to: '[name].css'}
+      { from: 'src/*.css', to: '[name].css'},
+      { from: 'src/*.d.ts', to: '[name].d.ts'}
     ])
   ]
 };

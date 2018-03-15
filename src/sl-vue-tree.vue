@@ -53,7 +53,9 @@
         <div class="sl-vue-tree-title">
           <span class="sl-vue-tree-toggle" v-if="!node.isLeaf" @click="event => onToggleHandler(event, node)">
             <slot name="toggle" :node="node">
-              {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
+              <span>
+               {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
+              </span>
             </slot>
           </span>
 
@@ -92,7 +94,11 @@
         </template>
 
         <template slot="toggle" slot-scope="{ node }">
-          <slot name="toggle" :node="node"></slot>
+          <slot name="toggle" :node="node">
+            <span>
+               {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
+            </span>
+          </slot>
         </template>
 
         <template slot="sidebar" slot-scope="{ node }">
@@ -104,6 +110,6 @@
   </div>
 </template>
 
-<script lang="ts" src="./sl-vue-tree.ts"></script>
+<script src="./sl-vue-tree.js"></script>
 
 
