@@ -1,0 +1,34 @@
+.sl-vue-tree {
+    position: relative;
+    cursor: default;
+}
+
+.sl-vue-tree-selected > .sl-vue-tree-node-item {
+    background-color: rgba(100, 100, 255, 0.5);
+}
+
+.sl-vue-tree-node-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+.sl-vue-tree-node-item.sl-vue-tree-cursor-inside {
+    outline: 1px solid rgba(100, 100, 255, 0.5);
+}
+
+.sl-vue-tree-gap {
+    width: 20px;
+    min-height: 1px;
+
+}
+
+.sl-vue-tree-sidebar {
+    margin-left: auto;
+}
+
+.sl-vue-tree-cursor {
+    position: absolute;
+    border: 1px solid rgba(100, 100, 255, 0.5);
+    height: 1px;
+    width: 100%;
+}

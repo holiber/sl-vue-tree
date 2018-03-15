@@ -1,0 +1,59 @@
+.sl-vue-tree {
+    position: relative;
+    cursor: default;
+}
+
+.sl-vue-tree.sl-vue-tree-root {
+    border: 1px solid rgb(9, 22, 29);
+    background-color: rgb(9, 22, 29);
+    color: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+}
+
+.sl-vue-tree-selected > .sl-vue-tree-node-item {
+    background-color: #13242d;
+    color: white;
+}
+
+.sl-vue-tree-node-item:hover {
+    color: white;
+}
+
+.sl-vue-tree-node-item {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 28px;
+    border: 1px solid transparent;
+}
+
+
+.sl-vue-tree-node-item.sl-vue-tree-cursor-inside {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.sl-vue-tree-gap {
+    width: 25px;
+    min-height: 1px;
+
+}
+
+.sl-vue-tree-toggle {
+    display: inline-block;
+    text-align: left;
+    width: 20px;
+}
+
+.sl-vue-tree-sidebar {
+    margin-left: auto;
+}
+
+.sl-vue-tree-cursor {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    height: 1px;
+    width: 100%;
+}
