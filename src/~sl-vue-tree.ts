@@ -1,3 +1,8 @@
+/**
+ * this is first generation of component builded with vue-property-decorator
+ * unfortunately the size of bundle with this deps is to big
+ */
+
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
 
@@ -23,6 +28,12 @@ export interface ICursorPosition<TDataType> {
   node: ISlTreeNode<TDataType>;
   placement: 'before' | 'inside' | 'after';
 }
+
+export interface IVueData<TDataType> {
+  rootCursorPosition: ICursorPosition<TDataType>;
+  rootDraggingNode: ISlTreeNode<TDataType>;
+}
+
 
 
 @Component({
@@ -184,7 +195,7 @@ export default class SlVueTree<TDataType> extends Vue {
 
   onNodeDragoverHandler(event: DragEvent, destNode: ISlTreeNode<TDataType>) {
     if (!this.draggingNode) return;
-    
+
     const $nodeItem = event.currentTarget as HTMLElement;
     const height = $nodeItem.offsetHeight;
     const edgeSize = this.edgeSize;
@@ -206,7 +217,7 @@ export default class SlVueTree<TDataType> extends Vue {
     this.cursorPosition = { node: destNode, placement };
 
     if (this.checkNodeIsParent(this.draggingNode, this.cursorPosition.node)) return;
-    
+
     event.preventDefault();
   }
 
