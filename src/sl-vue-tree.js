@@ -209,8 +209,6 @@ export default {
         return;
       }
 
-      console.log(event);
-
       if (this.checkNodeIsParent(this.draggingNode, this.cursorPosition.node)) {
         this.stopDrag();
         return;
