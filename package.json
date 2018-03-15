@@ -17,7 +17,7 @@
     "sortable"
   ],
   "author": "Holiber",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.10",
