@@ -78,7 +78,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       { from: 'src/*.css', to: '[name].css'},
-      { from: 'src/*.d.ts', to: '[name].d.ts'}
+      { from: 'src/*.d.ts', to: '[name].ts'}
     ])
   ]
 };
