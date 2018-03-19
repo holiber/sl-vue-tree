@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div id="app">
+<div id="app" @click="contextMenuIsVisible = false">
 
   <h2> Sl-vue-tree - custom dark theme and events handlers</h2>
 
@@ -30,6 +30,7 @@
           @select="nodeSelected"
           @drop="nodeDropped"
           @toggle="nodeToggled"
+          @nodeContextmenu="showContextMenu"
       >
 
         <template slot="title" slot-scope="{ node }">
@@ -63,6 +64,10 @@
 
     <div class="json-preview">
       <pre>{{ JSON.stringify(nodes, null, 4)}}</pre>
+    </div>
+
+    <div class="contextmenu" ref="contextmenu" v-show="contextMenuIsVisible">
+      <div @click="removeNode">Remove</div>
     </div>
   </div>
 
@@ -102,10 +107,11 @@
 
   new Vue({
     el: '#app',
-    components: { SlVueTree: SlVueTree },
+    components: { SlVueTree },
     data: function () {
      return {
        nodes: nodes,
+       contextMenuIsVisible: false,
        lastEvent: 'No last event'
      }
     },
@@ -129,6 +135,23 @@
 
       nodeDropped(node, position, event) {
         this.lastEvent = `Node ${node.title} is dropped ${position.placement} ${position.node.title}`;
+      },
+
+      showContextMenu(node, event) {
+        event.preventDefault();
+        this.contextMenuIsVisible = true;
+        const $contextMenu = this.$refs.contextmenu;
+        $contextMenu.style.left = event.clientX + 'px';
+        $contextMenu.style.top = event.clientY + 'px';
+      },
+
+      removeNode() {
+        this.contextMenuIsVisible = false;
+        const $slVueTree = this.$refs.slVueTree;
+        $slVueTree.traverse((nodeModel, node, nodeModels) => {
+          if (!node.isSelected) return;
+          nodeModels.splice(node.ind, 1);
+        });
       }
     }
   })
@@ -149,6 +172,22 @@
   .row {
     display: flex;
     margin-bottom: 10px;
+  }
+
+  .contextmenu {
+    position: absolute;
+    background-color: white;
+    color: black;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  .contextmenu > div {
+    padding: 10px;
+  }
+
+  .contextmenu > div:hover {
+    background-color: rgba(100, 100, 255, 0.5);
   }
 
 

@@ -140,10 +140,22 @@ export default {
       this.getRoot().$emit('toggle', toggledNode, event);
     },
 
+    emitNodeDblclick(node, event) {
+      this.getRoot().$emit('nodedblclick', node, event);
+    },
+
+    emitNodeContextmenu(node, event) {
+      this.getRoot().$emit('nodecontextmenu', node, event);
+    },
+
+    emitNodeClick(node, event) {
+      this.getRoot().$emit('nodeClick', node, event);
+    },
+
     onNodeClickHandler(event, clickedNode) {
       if (!this.isRoot) {
-        // handle event only in root component
-        this.$emit('itemClick', event, clickedNode);
+        // handle event only in the root component
+        this.getRoot().onNodeClickHandler(event, clickedNode);
         return;
       }
 
@@ -159,8 +171,8 @@ export default {
 
       this.emitInput(newNodes);
       this.emitSelect(clickedNode, event);
+      this.emitNodeClick(clickedNode, event);
     },
-
 
     onNodeDragoverHandler(event, destNode) {
       if (!this.draggingNode) return;

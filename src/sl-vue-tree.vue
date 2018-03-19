@@ -28,6 +28,8 @@
           @dragstart="event => onNodeDragstartHandler(event, node)"
           @dragend="event => onNodeDragendHandler(event, node)"
           @click="event => onNodeClickHandler(event, node)"
+          @contextmenu="event =>emitNodeContextmenu(node, event)"
+          @dblclick="event => emitNodeDblclick(node, event)"
           :class="{
             'sl-vue-tree-cursor-inside':
               cursorPosition &&
@@ -87,7 +89,6 @@
         :allowMultiselect="allowMultiselect"
         :edgeSize="edgeSize"
         :showBranches="showBranches"
-        @itemClick="(event, node) => onNodeClickHandler(event, node)"
       >
         <template slot="title" slot-scope="{ node }">
           <slot name="title" :node="node">{{ node.title }}</slot>
