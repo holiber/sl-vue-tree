@@ -2,6 +2,8 @@
   <div
       class="sl-vue-tree"
       :class="{'sl-vue-tree-root': isRoot }"
+
+      @dragover="event => { if (isRoot) event.preventDefault() }"
   >
     <div
         class="sl-vue-tree-node" v-for="(node, nodeInd) in nodes"
@@ -10,6 +12,7 @@
 
       <div
         class="sl-vue-tree-cursor sl-vue-tree-cursor_before"
+        @dragover="event => event.preventDefault()"
         v-show="
           cursorPosition &&
           cursorPosition.node.pathStr === node.pathStr &&
@@ -72,6 +75,7 @@
 
       <div
         class="sl-vue-tree-cursor sl-vue-tree-cursor_after"
+        @dragover="event => event.preventDefault()"
         v-show="
           cursorPosition &&
           cursorPosition.node.pathStr === node.pathStr &&
@@ -89,6 +93,7 @@
         :allowMultiselect="allowMultiselect"
         :edgeSize="edgeSize"
         :showBranches="showBranches"
+        @dragover="event => event.preventDefault()"
       >
         <template slot="title" slot-scope="{ node }">
           <slot name="title" :node="node">{{ node.title }}</slot>
