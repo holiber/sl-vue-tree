@@ -152,6 +152,20 @@ export default {
       this.getRoot().$emit('nodeclick', node, event);
     },
 
+    emitDragleave(node, direction, event) {
+      this.getRoot().$emit('dragleave', node, direction, event);
+    },
+
+
+    onDragleaveHandler(event, node) {
+      const $parent = this.getRoot().$el;
+      if (event.clientY > $parent.offsetTop + $parent.offsetHeight) {
+        this.emitDragleave(node, 'bottom', event);
+      } else if (event.clientY < $parent.offsetTop) {
+        this.emitDragleave(node, 'top', event);
+      }
+    },
+
     onNodeClickHandler(event, clickedNode) {
       if (!this.isRoot) {
         // handle event only in the root component
