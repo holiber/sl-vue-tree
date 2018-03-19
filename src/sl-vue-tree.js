@@ -156,12 +156,11 @@ export default {
       this.getRoot().$emit('dragleave', node, direction, event);
     },
 
-
     onDragleaveHandler(event, node) {
-      const $parent = this.getRoot().$el;
-      if (event.clientY > $parent.offsetTop + $parent.offsetHeight) {
+      const parentRect = this.getRoot().$el.getBoundingClientRect();
+      if (event.clientY > parentRect.bottom) {
         this.emitDragleave(node, 'bottom', event);
-      } else if (event.clientY < $parent.offsetTop) {
+      } else if (event.clientY < parentRect.top) {
         this.emitDragleave(node, 'top', event);
       }
     },
