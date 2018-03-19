@@ -1,7 +1,6 @@
 <template>
   <div
       class="sl-vue-tree"
-      @dragover.prevent="event => void 0"
       :class="{'sl-vue-tree-root': isRoot }"
   >
     <div
@@ -30,6 +29,7 @@
           @click="event => onNodeClickHandler(event, node)"
           @contextmenu="event =>emitNodeContextmenu(node, event)"
           @dblclick="event => emitNodeDblclick(node, event)"
+          @dragleave="event => onDragleaveHandler(event, node)"
           :class="{
             'sl-vue-tree-cursor-inside':
               cursorPosition &&
