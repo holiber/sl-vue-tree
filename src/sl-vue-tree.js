@@ -148,8 +148,8 @@ export default {
       this.getRoot().$emit('nodecontextmenu', node, event);
     },
 
-    emitNodeClick(node, event) {
-      this.getRoot().$emit('nodeClick', node, event);
+    emitNodeclick(node, event) {
+      this.getRoot().$emit('nodeclick', node, event);
     },
 
     onNodeClickHandler(event, clickedNode) {
@@ -171,7 +171,7 @@ export default {
 
       this.emitInput(newNodes);
       this.emitSelect(clickedNode, event);
-      this.emitNodeClick(clickedNode, event);
+      this.emitNodeclick(clickedNode, event);
     },
 
     onNodeDragoverHandler(event, destNode) {
