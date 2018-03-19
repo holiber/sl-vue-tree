@@ -93,6 +93,7 @@
         :allowMultiselect="allowMultiselect"
         :edgeSize="edgeSize"
         :showBranches="showBranches"
+        @dragover="event => event.preventDefault()"
       >
         <template slot="title" slot-scope="{ node }">
           <slot name="title" :node="node">{{ node.title }}</slot>
