@@ -24,13 +24,23 @@ export default {
     allowMultiselect: {
       type: Boolean,
       default: true
+    },
+    scrollAreaHeight: {
+      type: Number,
+      default: 70
+    },
+    maxScrollSpeed: {
+      type: Number,
+      default: 20
     }
   },
 
   data() {
     return {
       rootCursorPosition: null,
-      rootDraggingNode: null
+      rootDraggingNode: null,
+      scrollIntervalId: 0,
+      scrollSpeed: 0
     };
   },
 
@@ -188,21 +198,26 @@ export default {
     },
 
     onNodeDragoverHandler(event, destNode) {
+      if (!this.isRoot) {
+        this.getRoot().onNodeDragoverHandler(event, destNode);
+        return;
+      }
+
       if (!this.draggingNode) return;
 
       const $nodeItem = event.currentTarget;
-      const height = $nodeItem.offsetHeight;
+      const nodeHeight = $nodeItem.offsetHeight;
       const edgeSize = this.edgeSize;
       const offsetY = event.offsetY;
       let placement;
 
 
       if (destNode.isLeaf) {
-        placement = offsetY >= height / 2 ? 'after' : 'before';
+        placement = offsetY >= nodeHeight / 2 ? 'after' : 'before';
       } else {
         if (offsetY <= edgeSize) {
           placement = 'before';
-        } else if (offsetY >= height - edgeSize) {
+        } else if (offsetY >= nodeHeight - edgeSize) {
           placement = 'after';
         } else {
           placement = 'inside';
@@ -210,6 +225,22 @@ export default {
       }
 
       this.setCursorPosition({ node: destNode, placement });
+
+      const rootRect = this.getRoot().$el.getBoundingClientRect();
+
+      const scrollBottomLine = rootRect.bottom - this.scrollAreaHeight;
+      const scrollDownSpeed = (event.clientY - scrollBottomLine) / (rootRect.bottom - scrollBottomLine);
+      const scrollTopLine = rootRect.top + this.scrollAreaHeight;
+      const scrollTopSpeed = (scrollTopLine - event.clientY) / (scrollTopLine - rootRect.top);
+
+      if (scrollDownSpeed > 0) {
+        this.startScroll(scrollDownSpeed);
+      } else if (scrollTopSpeed > 0) {
+        this.startScroll(-scrollTopSpeed)
+      } else {
+        this.stopScroll();
+      }
+
 
       if (this.checkNodeIsParent(this.draggingNode, this.cursorPosition.node)) return;
 
@@ -221,16 +252,35 @@ export default {
 
     },
 
-
     onNodeDragstartHandler(event, node) {
       this.setDraggingNode(node);
     },
 
 
+    startScroll(speed) {
+      const $root = this.getRoot().$el;
+      if (this.scrollSpeed === speed) {
+        return;
+      } else if (this.scrollIntervalId) {
+        this.stopScroll();
+      }
+
+      this.scrollSpeed = speed;
+      this.scrollIntervalId = setInterval(() => {
+        $root.scrollTop += this.maxScrollSpeed * speed;
+      }, 20);
+    },
+
+    stopScroll() {
+      clearInterval(this.scrollIntervalId);
+      this.scrollIntervalId = 0;
+      this.scrollSpeed = 0;
+    },
+
     onNodeDragendHandler(event, targetNode) {
 
       if (!this.isRoot) {
-        this.getParent().onNodeDragendHandler(event, targetNode);
+        this.getRoot().onNodeDragendHandler(event, targetNode);
         return;
       }
 
@@ -287,6 +337,7 @@ export default {
     stopDrag() {
       this.setDraggingNode(null);
       this.setCursorPosition(null);
+      this.stopScroll();
     },
 
 

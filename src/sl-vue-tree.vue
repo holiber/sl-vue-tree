@@ -2,7 +2,6 @@
   <div
       class="sl-vue-tree"
       :class="{'sl-vue-tree-root': isRoot }"
-
       @dragover="event => { if (isRoot) event.preventDefault() }"
   >
     <div
