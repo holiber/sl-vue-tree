@@ -182,19 +182,26 @@ export default {
         return;
       }
 
+      this.emitNodeclick(clickedNode, event);
+
+      if (event.defaultPrevented) return;
+
+      this.select(clickedNode, event);
+    },
+
+    select(clickedNode, event) {
       const newNodes = this.copy(this.value);
 
       this.traverse((node, nodeModel) => {
         if (node.pathStr === clickedNode.pathStr) {
           nodeModel.isSelected = true;
-        } else if (!event.ctrlKey || !this.allowMultiselect) {
+        } else if (!event || !event.ctrlKey || !this.allowMultiselect) {
           if (nodeModel.isSelected) nodeModel.isSelected = false;
         }
       }, newNodes);
 
       this.emitInput(newNodes);
       this.emitSelect(clickedNode, event);
-      this.emitNodeclick(clickedNode, event);
     },
 
     onNodeDragoverHandler(event, destNode) {
@@ -253,6 +260,11 @@ export default {
     },
 
     onNodeDragstartHandler(event, node) {
+      if (!this.isRoot) {
+        this.getRoot().onNodeDragstartHandler(event, node);
+        return;
+      }
+      this.select(node);
       this.setDraggingNode(node);
     },
 
