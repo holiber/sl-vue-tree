@@ -264,7 +264,7 @@ export default {
         this.getRoot().onNodeDragstartHandler(event, node);
         return;
       }
-      this.select(node);
+      this.select(node, event);
       this.setDraggingNode(node);
     },
 
