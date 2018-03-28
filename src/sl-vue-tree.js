@@ -296,6 +296,8 @@ export default {
         return;
       }
 
+      if (!this.cursorPosition) return;
+
       if (this.checkNodeIsParent(this.draggingNode, this.cursorPosition.node)) {
         this.stopDrag();
         return;
