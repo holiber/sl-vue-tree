@@ -49,7 +49,7 @@ export default class SlVueTree<TDataType> extends Vue {
     onNodeDragstartHandler(event: DragEvent, node: ISlTreeNode<TDataType>): void;
     onNodeDragendHandler(): void;
     onToggleHandler(event: DragEvent, node: ISlTreeNode<TDataType>): void;
-    getParent(): SlVueTree<TDataType>;form
+    getParent(): SlVueTree<TDataType>;
     getNodeSiblings(nodes: ISlTreeNodeModel<TDataType>[], path: number[]): ISlTreeNodeModel<TDataType>[];
     updateNode(nodeToUpdate: ISlTreeNode<TDataType>, patch: Partial<ISlTreeNodeModel<TDataType>>): void;
     getSelected(): ISlTreeNode<TDataType>[];
