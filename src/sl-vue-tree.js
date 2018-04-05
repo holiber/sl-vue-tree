@@ -139,8 +139,8 @@ export default {
       this.getRoot().$emit('input', newValue);
     },
 
-    emitSelect(selectedNode, event) {
-      this.getRoot().$emit('select', selectedNode, event);
+    emitSelect(selectedNodes, event) {
+      this.getRoot().$emit('select', selectedNodes, event);
     },
 
     emitDrop(targetNode, position, event) {
@@ -192,6 +192,7 @@ export default {
     select(clickedNode, event) {
       const newNodes = this.copy(this.value);
       const shiftSelectionMode = this.allowMultiselect && event.shiftKey && this.lastSelectedNode;
+      const selectedNodes = [];
       let shiftSelectionStarted = false;
 
       this.traverse((node, nodeModel) => {
@@ -202,18 +203,20 @@ export default {
             shiftSelectionStarted = !shiftSelectionStarted;
           }
           if (shiftSelectionStarted) nodeModel.isSelected = true;
-
         } else if (node.pathStr === clickedNode.pathStr) {
           nodeModel.isSelected = true;
         } else if (!event || !event.ctrlKey || !this.allowMultiselect) {
           if (nodeModel.isSelected) nodeModel.isSelected = false;
         }
+
+        if (nodeModel.isSelected) selectedNodes.push(node);
+
       }, newNodes);
 
 
       this.lastSelectedNode = clickedNode;
       this.emitInput(newNodes);
-      this.emitSelect(clickedNode, event);
+      this.emitSelect(selectedNodes, event);
     },
 
     onNodeDragoverHandler(event, destNode) {

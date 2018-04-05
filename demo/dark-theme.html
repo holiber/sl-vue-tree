@@ -76,6 +76,7 @@
 </div>
 
 <script>
+
   var nodes = [
     {title: 'Item1', isLeaf: true},
     {title: 'Item2', isLeaf: true, data: { visible: false }},
@@ -126,8 +127,8 @@
         this.lastEvent = `Node ${node.title} is ${ visible ? 'visible' : 'invisible'} now`;
       },
 
-      nodeSelected(node, event) {
-        this.lastEvent = `Node ${node.title} is selected`;
+      nodeSelected(nodes, event) {
+        this.lastEvent = `Select nodes: ${nodes.map(node => node.title).join(', ')}`;
       },
 
       nodeToggled(node, event) {
