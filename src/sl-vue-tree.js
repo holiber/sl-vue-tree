@@ -40,7 +40,8 @@ export default {
       rootCursorPosition: null,
       rootDraggingNode: null,
       scrollIntervalId: 0,
-      scrollSpeed: 0
+      scrollSpeed: 0,
+      lastSelectedNode: null
     };
   },
 
@@ -185,21 +186,32 @@ export default {
       this.emitNodeclick(clickedNode, event);
 
       if (event.defaultPrevented) return;
-
       this.select(clickedNode, event);
     },
 
     select(clickedNode, event) {
       const newNodes = this.copy(this.value);
+      const shiftSelectionMode = this.allowMultiselect && event.shiftKey && this.lastSelectedNode;
+      let shiftSelectionStarted = false;
 
       this.traverse((node, nodeModel) => {
-        if (node.pathStr === clickedNode.pathStr) {
+
+        if (shiftSelectionMode) {
+          if (node.pathStr === clickedNode.pathStr || node.pathStr === this.lastSelectedNode.pathStr) {
+            nodeModel.isSelected = true;
+            shiftSelectionStarted = !shiftSelectionStarted;
+          }
+          if (shiftSelectionStarted) nodeModel.isSelected = true;
+
+        } else if (node.pathStr === clickedNode.pathStr) {
           nodeModel.isSelected = true;
         } else if (!event || !event.ctrlKey || !this.allowMultiselect) {
           if (nodeModel.isSelected) nodeModel.isSelected = false;
         }
       }, newNodes);
 
+
+      this.lastSelectedNode = clickedNode;
       this.emitInput(newNodes);
       this.emitSelect(clickedNode, event);
     },
@@ -336,6 +348,7 @@ export default {
         return false;
       }, newNodes);
 
+      this.lastSelectedNode = null;
       this.emitInput(newNodes);
       this.emitDrop(this.draggingNode, this.cursorPosition, event);
       this.stopDrag();
