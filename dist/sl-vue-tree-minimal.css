@@ -1,6 +1,7 @@
 .sl-vue-tree {
     position: relative;
     cursor: default;
+    user-select: none;
 }
 
 .sl-vue-tree-selected > .sl-vue-tree-node-item {
@@ -31,4 +32,13 @@
     border: 1px solid rgba(100, 100, 255, 0.5);
     height: 1px;
     width: 100%;
+}
+
+.sl-vue-tree-drag-info {
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    opacity: 0.5;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 5px 10px;
 }

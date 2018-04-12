@@ -2,7 +2,6 @@
   <div
       class="sl-vue-tree"
       :class="{'sl-vue-tree-root': isRoot }"
-      @dragover="event => { if (isRoot) event.preventDefault() }"
   >
     <div
         class="sl-vue-tree-node" v-for="(node, nodeInd) in nodes"
@@ -23,11 +22,10 @@
 
       <div
           class="sl-vue-tree-node-item"
-          draggable="true"
-          @dragover="event => onNodeDragoverHandler(event, node)"
+          @mousemove="event => onNodeMousemoveHandler(event, node)"
           @drop="event => onNodeDropHandler(event, node)"
-          @dragstart="event => onNodeDragstartHandler(event, node)"
-          @dragend="event => onNodeDragendHandler(event, node)"
+          @mousedown="event => onNodeMousedownHandler(event, node)"
+          @mouseup="event => onNodeMouseupHandler(event, node)"
           @click="event => onNodeClickHandler(event, node)"
           @contextmenu="event =>emitNodeContextmenu(node, event)"
           @dblclick="event => emitNodeDblclick(node, event)"
@@ -112,6 +110,13 @@
 
       </sl-vue-tree>
     </div>
+
+    <div v-show="isDragging" ref="dragInfo" class="sl-vue-tree-drag-info">
+      <slot name="draginfo">
+        Items: {{selectionSize}}
+      </slot>
+    </div>
+
   </div>
 </template>
 
