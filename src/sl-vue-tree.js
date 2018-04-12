@@ -38,10 +38,12 @@ export default {
   data() {
     return {
       rootCursorPosition: null,
-      rootDraggingNode: null,
       scrollIntervalId: 0,
       scrollSpeed: 0,
-      lastSelectedNode: null
+      lastSelectedNode: null,
+      mouseIsDown: false,
+      isDragging: false,
+      lastMousePos: {x: 0, y: 0}
     };
   },
 
@@ -49,11 +51,6 @@ export default {
     cursorPosition() {
       if (this.isRoot) return this.rootCursorPosition;
       return this.getParent().cursorPosition;
-    },
-
-    draggingNode() {
-      if (this.isRoot) return this.rootDraggingNode;
-      return this.getParent().draggingNode;
     },
 
     nodes() {
@@ -78,17 +75,13 @@ export default {
 
     isRoot() {
       return !this.level
+    },
+
+    selectionSize() {
+      return this.getSelected().length;
     }
   },
   methods: {
-
-    setDraggingNode(node) {
-      if (this.isRoot) {
-        this.rootDraggingNode = node;
-        return;
-      }
-      this.getParent().setDraggingNode(node);
-    },
 
     setCursorPosition(pos) {
       if (this.isRoot) {
@@ -163,18 +156,18 @@ export default {
       this.getRoot().$emit('nodeclick', node, event);
     },
 
-    emitDragleave(node, direction, event) {
-      this.getRoot().$emit('dragleave', node, direction, event);
-    },
-
-    onDragleaveHandler(event, node) {
-      const parentRect = this.getRoot().$el.getBoundingClientRect();
-      if (event.clientY > parentRect.bottom) {
-        this.emitDragleave(node, 'bottom', event);
-      } else if (event.clientY < parentRect.top) {
-        this.emitDragleave(node, 'top', event);
-      }
-    },
+    // emitDragleave(node, direction, event) {
+    //   this.getRoot().$emit('dragleave', node, direction, event);
+    // },
+    //
+    // onDragleaveHandler(event, node) {
+    //   const parentRect = this.getRoot().$el.getBoundingClientRect();
+    //   if (event.clientY > parentRect.bottom) {
+    //     this.emitDragleave(node, 'bottom', event);
+    //   } else if (event.clientY < parentRect.top) {
+    //     this.emitDragleave(node, 'top', event);
+    //   }
+    // },
 
     onNodeClickHandler(event, clickedNode) {
       if (!this.isRoot) {
@@ -189,7 +182,8 @@ export default {
       this.select(clickedNode, event);
     },
 
-    select(clickedNode, event) {
+    select(clickedNode, event = null, addToSelection = false) {
+      addToSelection = ((event && event.ctrlKey) || addToSelection) && this.allowMultiselect;
       const newNodes = this.copy(this.value);
       const shiftSelectionMode = this.allowMultiselect && event.shiftKey && this.lastSelectedNode;
       const selectedNodes = [];
@@ -205,7 +199,7 @@ export default {
           if (shiftSelectionStarted) nodeModel.isSelected = true;
         } else if (node.pathStr === clickedNode.pathStr) {
           nodeModel.isSelected = true;
-        } else if (!event || !event.ctrlKey || !this.allowMultiselect) {
+        } else if (!addToSelection) {
           if (nodeModel.isSelected) nodeModel.isSelected = false;
         }
 
@@ -219,13 +213,34 @@ export default {
       this.emitSelect(selectedNodes, event);
     },
 
-    onNodeDragoverHandler(event, destNode) {
+    onNodeMousemoveHandler(event, destNode) {
       if (!this.isRoot) {
-        this.getRoot().onNodeDragoverHandler(event, destNode);
+        this.getRoot().onNodeMousemoveHandler(event, destNode);
         return;
       }
 
-      if (!this.draggingNode) return;
+
+      const initialDraggingState = this.isDragging;
+      this.isDragging =
+        this.mouseIsDown &&
+        (this.lastMousePos.x !== event.clientX || this.lastMousePos.y !== event.clientY);
+
+      const isDragStarted = initialDraggingState === false && this.isDragging === true;
+
+
+
+      this.lastMousePos = {
+        x: event.clientX,
+        y: event.clientY
+      };
+
+
+      if (!this.isDragging) return;
+
+      if (isDragStarted && !destNode.isSelected) {
+        this.select(destNode, event);
+      }
+
 
       const $nodeItem = event.currentTarget;
       const nodeHeight = $nodeItem.offsetHeight;
@@ -248,7 +263,12 @@ export default {
 
       this.setCursorPosition({ node: destNode, placement });
 
-      const rootRect = this.getRoot().$el.getBoundingClientRect();
+      const $root = this.getRoot().$el;
+      const rootRect = $root.getBoundingClientRect();
+      const $dragInfo = this.$refs.dragInfo;
+
+      $dragInfo.style.top = (event.clientY - rootRect.top + $root.scrollTop) + 'px';
+      $dragInfo.style.left = (event.clientX - rootRect.left) + 'px';
 
       const scrollBottomLine = rootRect.bottom - this.scrollAreaHeight;
       const scrollDownSpeed = (event.clientY - scrollBottomLine) / (rootRect.bottom - scrollBottomLine);
@@ -262,11 +282,6 @@ export default {
       } else {
         this.stopScroll();
       }
-
-
-      if (this.checkNodeIsParent(this.draggingNode, this.cursorPosition.node)) return;
-
-      event.preventDefault();
     },
 
 
@@ -274,13 +289,12 @@ export default {
 
     },
 
-    onNodeDragstartHandler(event, node) {
+    onNodeMousedownHandler(event, node) {
       if (!this.isRoot) {
-        this.getRoot().onNodeDragstartHandler(event, node);
+        this.getRoot().onNodeMousedownHandler(event, node);
         return;
       }
-      this.select(node, event);
-      this.setDraggingNode(node);
+      this.mouseIsDown = true;
     },
 
 
@@ -304,56 +318,83 @@ export default {
       this.scrollSpeed = 0;
     },
 
-    onNodeDragendHandler(event, targetNode) {
+    onNodeMouseupHandler(event, targetNode) {
 
       if (!this.isRoot) {
-        this.getRoot().onNodeDragendHandler(event, targetNode);
+        this.getRoot().onNodeMouseupHandler(event, targetNode);
         return;
       }
 
-      if (!this.cursorPosition) return;
+      this.mouseIsDown = false;
 
-      if (this.checkNodeIsParent(this.draggingNode, this.cursorPosition.node)) {
+      if (!this.isDragging) {
+        this.select(targetNode, event);
+        return;
+      }
+
+      if (!this.cursorPosition) {
         this.stopDrag();
         return;
       };
 
+
+      const draggingNodes = this.getSelected();
+
+      // check that nodes is possible to insert
+      for (let draggingNode of draggingNodes) {
+        if (draggingNode.pathStr == this.cursorPosition.node.pathStr) {
+          this.stopDrag();
+          return;
+        }
+
+        if (this.checkNodeIsParent(draggingNode, this.cursorPosition.node)) {
+          this.stopDrag();
+          return;
+        };
+      }
+
       const newNodes = this.copy(this.value);
+      const nodeModelsToInsert = [];
+
+      // find and mark dragging model to delete
+      for (let draggingNode of draggingNodes) {
+        const sourceSiblings = this.getNodeSiblings(newNodes, draggingNode.path);
+        const draggingNodeModel = sourceSiblings[draggingNode.ind];
+        nodeModelsToInsert.push(this.copy(draggingNodeModel));
+        draggingNodeModel['_markToDelete'] = true;
+      }
 
 
-      // find and mark dragging model
-      const sourceSiblings = this.getNodeSiblings(newNodes, this.draggingNode.path);
-      const draggingNodeModel = sourceSiblings[this.draggingNode.ind];
-      const nodeModelToInsert = this.copy(draggingNodeModel);
-      draggingNodeModel['_markToDelete'] = true;
-
-      // insert dragging node to the new place
+      // insert dragging nodes to the new place
       const destNode = this.cursorPosition.node;
       const destSiblings = this.getNodeSiblings(newNodes, destNode.path);
       const destNodeModel = destSiblings[destNode.ind];
 
-      if (this.cursorPosition.placement == 'inside') {
+      if (this.cursorPosition.placement === 'inside') {
         destNodeModel.children = destNodeModel.children || [];
-        destNodeModel.children.unshift(nodeModelToInsert);
+        destNodeModel.children.unshift(...nodeModelsToInsert);
       } else {
         const insertInd = this.cursorPosition.placement === 'before' ?
           destNode.ind :
           destNode.ind + 1;
 
-        destSiblings.splice(insertInd, 0, nodeModelToInsert);
+        destSiblings.splice(insertInd, 0, ...nodeModelsToInsert);
       }
+
+
 
       // delete dragging node from the old place
       this.traverse((node, nodeModel, siblings) => {
-        if (!nodeModel['_markToDelete']) return true;
-        const nodeInd = node.ind;
-        siblings.splice(nodeInd, 1);
-        return false;
+        let i = siblings.length;
+        while (i--) {
+          if (siblings[i]['_markToDelete']) siblings.splice(i, 1);
+        }
       }, newNodes);
+
 
       this.lastSelectedNode = null;
       this.emitInput(newNodes);
-      this.emitDrop(this.draggingNode, this.cursorPosition, event);
+      this.emitDrop(draggingNodes, this.cursorPosition, event);
       this.stopDrag();
     },
 
@@ -365,7 +406,8 @@ export default {
     },
 
     stopDrag() {
-      this.setDraggingNode(null);
+      this.isDragging = false;
+      this.mouseIsDown = false;
       this.setCursorPosition(null);
       this.stopScroll();
     },

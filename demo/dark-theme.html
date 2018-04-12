@@ -135,8 +135,8 @@
         this.lastEvent = `Node ${node.title} is ${ node.isExpanded ? 'expanded' : 'collapsed'}`;
       },
 
-      nodeDropped(node, position, event) {
-        this.lastEvent = `Node ${node.title} is dropped ${position.placement} ${position.node.title}`;
+      nodeDropped(nodes, position, event) {
+        this.lastEvent = `Nodes: ${nodes.map(node => node.title).join(', ')} are dropped ${position.placement} ${position.node.title}`;
       },
 
       showContextMenu(node, event) {
