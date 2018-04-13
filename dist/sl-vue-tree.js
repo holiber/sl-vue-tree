@@ -139,6 +139,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
 
+  mounted() {
+    if (this.isRoot) {
+      document.addEventListener('mouseup', this.onDocumentMouseupHandler);
+    }
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('mouseup', this.onDocumentMouseupHandler);
+  },
+
   computed: {
     cursorPosition() {
       if (this.isRoot) return this.rootCursorPosition;
@@ -392,16 +402,22 @@ __webpack_require__.r(__webpack_exports__);
       this.scrollSpeed = 0;
     },
 
-    onNodeMouseupHandler(event, targetNode) {
+    onDocumentMouseupHandler(event) {
+      console.log('document mouseup');
+      if (this.isDragging) this.onNodeMouseupHandler(event);
+    },
+
+    onNodeMouseupHandler(event, targetNode = null) {
 
       if (!this.isRoot) {
         this.getRoot().onNodeMouseupHandler(event, targetNode);
         return;
       }
 
+      console.log('node mouseup');
       this.mouseIsDown = false;
 
-      if (!this.isDragging) {
+      if (!this.isDragging && targetNode) {
         this.select(targetNode, event);
         return;
       }

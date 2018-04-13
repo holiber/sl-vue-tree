@@ -47,6 +47,16 @@ export default {
     };
   },
 
+  mounted() {
+    if (this.isRoot) {
+      document.addEventListener('mouseup', this.onDocumentMouseupHandler);
+    }
+  },
+
+  beforeDestroy() {
+    document.removeEventListener('mouseup', this.onDocumentMouseupHandler);
+  },
+
   computed: {
     cursorPosition() {
       if (this.isRoot) return this.rootCursorPosition;
@@ -219,7 +229,6 @@ export default {
         return;
       }
 
-
       const initialDraggingState = this.isDragging;
       this.isDragging =
         this.mouseIsDown &&
@@ -318,7 +327,11 @@ export default {
       this.scrollSpeed = 0;
     },
 
-    onNodeMouseupHandler(event, targetNode) {
+    onDocumentMouseupHandler(event) {
+      if (this.isDragging) this.onNodeMouseupHandler(event);
+    },
+
+    onNodeMouseupHandler(event, targetNode = null) {
 
       if (!this.isRoot) {
         this.getRoot().onNodeMouseupHandler(event, targetNode);
@@ -327,7 +340,7 @@ export default {
 
       this.mouseIsDown = false;
 
-      if (!this.isDragging) {
+      if (!this.isDragging && targetNode) {
         this.select(targetNode, event);
         return;
       }
