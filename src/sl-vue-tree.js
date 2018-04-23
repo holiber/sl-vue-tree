@@ -162,35 +162,6 @@ export default {
       this.getRoot().$emit('nodecontextmenu', node, event);
     },
 
-    emitNodeclick(node, event) {
-      this.getRoot().$emit('nodeclick', node, event);
-    },
-
-    // emitDragleave(node, direction, event) {
-    //   this.getRoot().$emit('dragleave', node, direction, event);
-    // },
-    //
-    // onDragleaveHandler(event, node) {
-    //   const parentRect = this.getRoot().$el.getBoundingClientRect();
-    //   if (event.clientY > parentRect.bottom) {
-    //     this.emitDragleave(node, 'bottom', event);
-    //   } else if (event.clientY < parentRect.top) {
-    //     this.emitDragleave(node, 'top', event);
-    //   }
-    // },
-
-    onNodeClickHandler(event, clickedNode) {
-      if (!this.isRoot) {
-        // handle event only in the root component
-        this.getRoot().onNodeClickHandler(event, clickedNode);
-        return;
-      }
-
-      this.emitNodeclick(clickedNode, event);
-
-      if (event.defaultPrevented) return;
-      this.select(clickedNode, event);
-    },
 
     select(clickedNode, event = null, addToSelection = false) {
       addToSelection = ((event && event.ctrlKey) || addToSelection) && this.allowMultiselect;

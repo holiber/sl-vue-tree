@@ -26,10 +26,8 @@
           @drop="event => onNodeDropHandler(event, node)"
           @mousedown="event => onNodeMousedownHandler(event, node)"
           @mouseup="event => onNodeMouseupHandler(event, node)"
-          @click="event => onNodeClickHandler(event, node)"
           @contextmenu="event =>emitNodeContextmenu(node, event)"
           @dblclick="event => emitNodeDblclick(node, event)"
-          @dragleave="event => onDragleaveHandler(event, node)"
           :class="{
             'sl-vue-tree-cursor-inside':
               cursorPosition &&
