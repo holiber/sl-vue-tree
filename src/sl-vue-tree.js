@@ -194,9 +194,9 @@ export default {
       this.emitSelect(selectedNodes, event);
     },
 
-    onNodeMousemoveHandler(event, destNode) {
+    onNodeMousemoveHandler(event) {
       if (!this.isRoot) {
-        this.getRoot().onNodeMousemoveHandler(event, destNode);
+        this.getRoot().onNodeMousemoveHandler(event);
         return;
       }
 
@@ -219,12 +219,39 @@ export default {
 
       if (!this.isDragging) return;
 
+      const $root = this.getRoot().$el;
+      const rootRect = $root.getBoundingClientRect();
+      const $dragInfo = this.$refs.dragInfo;
+      const $nodesList = this.$refs.nodes;
+      let dragInfoTop = (event.clientY - rootRect.top + $root.scrollTop - ($dragInfo.style.marginBottom | 0) );
+      const dragInfoLeft = (event.clientX - rootRect.left);
+      const dragInfoHeight = $dragInfo.offsetHeight;
+      const nodesListRect = $nodesList.getBoundingClientRect();
+
+      // prevent $dragInfo to appear outside of $nodesList region
+      if (dragInfoTop + dragInfoHeight >= nodesListRect.bottom) {
+        dragInfoTop = nodesListRect.bottom - dragInfoHeight;
+      }
+
+      $dragInfo.style.top = dragInfoTop + 'px';
+      $dragInfo.style.left = dragInfoLeft + 'px';
+
+
+
+      const $target = document.elementFromPoint(event.clientX, event.clientY);
+      const $nodeItem = $target.getAttribute('path') ? $target : $target.closest('[path]');
+
+      if (!$nodeItem) return;
+
+      const destNode = this.getNode(JSON.parse($nodeItem.getAttribute('path')));
+
+
+
       if (isDragStarted && !destNode.isSelected) {
         this.select(destNode, event);
       }
 
 
-      const $nodeItem = event.currentTarget;
       const nodeHeight = $nodeItem.offsetHeight;
       const edgeSize = this.edgeSize;
       const offsetY = event.offsetY;
@@ -244,13 +271,6 @@ export default {
       }
 
       this.setCursorPosition({ node: destNode, placement });
-
-      const $root = this.getRoot().$el;
-      const rootRect = $root.getBoundingClientRect();
-      const $dragInfo = this.$refs.dragInfo;
-
-      $dragInfo.style.top = (event.clientY - rootRect.top + $root.scrollTop) + 'px';
-      $dragInfo.style.left = (event.clientX - rootRect.left) + 'px';
 
       const scrollBottomLine = rootRect.bottom - this.scrollAreaHeight;
       const scrollDownSpeed = (event.clientY - scrollBottomLine) / (rootRect.bottom - scrollBottomLine);
