@@ -5,7 +5,7 @@
 
       @mousemove="event => onNodeMousemoveHandler(event)"
   >
-    <div ref="nodes">
+    <div ref="nodes" class="sl-vue-tree-nodes-list">
       <div
           class="sl-vue-tree-node" v-for="(node, nodeInd) in nodes"
           :class="{'sl-vue-tree-selected': node.isSelected }"
@@ -115,13 +115,13 @@
 
         </sl-vue-tree>
       </div>
-    </div>
 
+      <div v-show="isDragging" ref="dragInfo" class="sl-vue-tree-drag-info">
+        <slot name="draginfo">
+          Items: {{selectionSize}}
+        </slot>
+      </div>
 
-    <div v-show="isDragging" ref="dragInfo" class="sl-vue-tree-drag-info">
-      <slot name="draginfo">
-        Items: {{selectionSize}}
-      </slot>
     </div>
 
   </div>

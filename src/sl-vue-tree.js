@@ -222,16 +222,8 @@ export default {
       const $root = this.getRoot().$el;
       const rootRect = $root.getBoundingClientRect();
       const $dragInfo = this.$refs.dragInfo;
-      const $nodesList = this.$refs.nodes;
-      let dragInfoTop = (event.clientY - rootRect.top + $root.scrollTop - ($dragInfo.style.marginBottom | 0) );
+      const dragInfoTop = (event.clientY - rootRect.top + $root.scrollTop - ($dragInfo.style.marginBottom | 0) );
       const dragInfoLeft = (event.clientX - rootRect.left);
-      const dragInfoHeight = $dragInfo.offsetHeight;
-      const nodesListRect = $nodesList.getBoundingClientRect();
-
-      // prevent $dragInfo to appear outside of $nodesList region
-      if (dragInfoTop + dragInfoHeight >= nodesListRect.bottom) {
-        dragInfoTop = nodesListRect.bottom - dragInfoHeight;
-      }
 
       $dragInfo.style.top = dragInfoTop + 'px';
       $dragInfo.style.left = dragInfoLeft + 'px';
