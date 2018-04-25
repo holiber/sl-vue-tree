@@ -1,6 +1,6 @@
 {
   "name": "sl-vue-tree",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "description": "draggable tree vue component",
   "main": "dist/sl-vue-tree.js",
   "types": "dist/sl-vue-tree.d.ts",

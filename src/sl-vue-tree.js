@@ -237,8 +237,6 @@ export default {
 
       const destNode = this.getNode(JSON.parse($nodeItem.getAttribute('path')));
 
-
-
       if (isDragStarted && !destNode.isSelected) {
         this.select(destNode, event);
       }
@@ -278,9 +276,27 @@ export default {
       }
     },
 
+    onMouseleaveHandler(event) {
+      if (!this.isRoot) return;
+      const $root = this.getRoot().$el;
+      const rootRect = $root.getBoundingClientRect();
+      if (event.clientY >= rootRect.bottom) {
+        this.setCursorPosition({ node: this.getLastNode(), placement: 'after' });
+      } else if (event.clientY < rootRect.top) {
+        this.setCursorPosition({ node: this.getFirstNode(), placement: 'before'});
+      }
+    },
 
-    onNodeDropHandler(event, targetNode) {
+    getLastNode() {
+      let lastNode  = null;
+      this.traverse((node) => {
+        lastNode = node;
+      });
+      return lastNode;
+    },
 
+    getFirstNode() {
+      return this.getNode([0]);
     },
 
     onNodeMousedownHandler(event, node) {
