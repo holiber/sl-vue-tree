@@ -11,6 +11,12 @@
     border-radius: 3px;
 }
 
+.sl-vue-tree-root > .sl-vue-tree-nodes-list {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 4px;
+}
+
 .sl-vue-tree-selected > .sl-vue-tree-node-item {
     background-color: #13242d;
     color: white;

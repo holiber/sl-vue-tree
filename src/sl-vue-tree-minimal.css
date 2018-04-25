@@ -4,8 +4,20 @@
     user-select: none;
 }
 
+.sl-vue-tree-root > .sl-vue-tree-nodes-list {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 4px;
+}
+
 .sl-vue-tree-selected > .sl-vue-tree-node-item {
     background-color: rgba(100, 100, 255, 0.5);
+}
+
+.sl-vue-tree-node-list {
+    position: relative;
+    display: flex;
+    flex-direction: row;
 }
 
 .sl-vue-tree-node-item {
