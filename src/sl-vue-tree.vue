@@ -4,6 +4,7 @@
       :class="{'sl-vue-tree-root': isRoot }"
 
       @mousemove="event => onNodeMousemoveHandler(event)"
+      @mouseleave="event => onMouseleaveHandler(event)"
   >
     <div ref="nodes" class="sl-vue-tree-nodes-list">
       <div
