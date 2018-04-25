@@ -202,8 +202,10 @@ export default {
 
       const initialDraggingState = this.isDragging;
       this.isDragging =
+        this.isDragging || (
         this.mouseIsDown &&
-        (this.lastMousePos.x !== event.clientX || this.lastMousePos.y !== event.clientY);
+        (this.lastMousePos.x !== event.clientX || this.lastMousePos.y !== event.clientY)
+      );
 
       const isDragStarted = initialDraggingState === false && this.isDragging === true;
 
