@@ -277,7 +277,7 @@ export default {
     },
 
     onMouseleaveHandler(event) {
-      if (!this.isRoot) return;
+      if (!this.isRoot || !this.isDragging) return;
       const $root = this.getRoot().$el;
       const rootRect = $root.getBoundingClientRect();
       if (event.clientY >= rootRect.bottom) {
