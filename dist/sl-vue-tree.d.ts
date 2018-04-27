@@ -37,10 +37,8 @@ export default class SlVueTree<TDataType> extends Vue {
     draggingNode: ISlTreeNode<TDataType>;
     readonly nodes: ISlTreeNode<TDataType>[];
     getNode(path: number[]): ISlTreeNode<TDataType>;
-    getNodeSiblings(nodes: ISlTreeNodeModel<TDataType>[], path: number[]): ISlTreeNodeModel<TDataType>[];
     updateNode(nodeToUpdate: ISlTreeNode<TDataType>, patch: Partial<ISlTreeNodeModel<TDataType>>): void;
     getSelected(): ISlTreeNode<TDataType>[];
     traverse(cb: (node: ISlTreeNode<TDataType>, nodeModel: ISlTreeNodeModel<TDataType>, siblings: ISlTreeNodeModel<TDataType>[]) => boolean | void, nodeModels?: ISlTreeNodeModel<TDataType>[], parentPath?: number[]): ISlTreeNode<TDataType>[] | boolean;
     getNodeEl(path: number[]): HTMLElement;
-
 }
