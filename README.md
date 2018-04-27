@@ -87,7 +87,7 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 | scrollAreaHeight | Number             | 70      | Offset in pixels from top and bottom for the component element. If while dragging cursor is in that area, the scrolling starts.                                                                                |
 | maxScrollSpeed   | Number             | 20      | The scroll speed is relative to the cursor position. Defines the max scroll speed.             
 
-#Computed props
+# Computed props
 
 | prop           | type            | description                                                                                                                                                                                                                                                     |
 |----------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
