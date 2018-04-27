@@ -7,7 +7,7 @@ Customizable draggable tree component for Vue.js
 [demo](demo/index.html)
 
 	
-#Quick start
+# Quick start
 ````
 
 <div id="app">
@@ -77,7 +77,7 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 
 
 
-#Props
+# Props
 
 | prop             | type               | default | description                                                                                                                                                                                              |
 |------------------|--------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -103,7 +103,7 @@ interface ICursorPosition<TDataType> {
   }  
 ````
 
-#Events
+# Events
 
 | event           | callback arguments                                                         | description                                       |
 |-----------------|----------------------------------------------------------------------------|---------------------------------------------------|
@@ -115,7 +115,7 @@ interface ICursorPosition<TDataType> {
 | nodedblclick    | node: ISlTreeNode, event: MouseEvent                                       | handle `dblclick` event on node                   |
 | nodecontextmenu | node: ISlTreeNode, event: MouseEvent                                       | handle `contextmenu` event on node                |
 
-#Methods
+# Methods
 
 
 | method                                                                                                   | description                                                                                        |
@@ -128,7 +128,7 @@ interface ICursorPosition<TDataType> {
 | getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using it's path                                                        |
 | getSelected(): ISlTreeNode[]                                                                             | Get selected nodes                                                                                 |
 
-#Slots
+# Slots
 
 
 | slot     | context     | description                                                                                   |
