@@ -91,7 +91,7 @@
         <sl-vue-tree
             v-if="node.children && node.children.length && node.isExpanded"
             :value="node.children"
-            :level="level + 1"
+            :level="node.level"
             :parentInd="nodeInd"
             :allowMultiselect="allowMultiselect"
             :edgeSize="edgeSize"

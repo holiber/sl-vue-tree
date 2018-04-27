@@ -31,7 +31,6 @@
           @drop="nodeDropped"
           @toggle="nodeToggled"
           @nodeContextmenu="showContextMenu"
-          @dragleave="dragLeave"
       >
 
         <template slot="title" slot-scope="{ node }">
@@ -154,10 +153,6 @@
           if (!node.isSelected) return;
           nodeModels.splice(node.ind, 1);
         });
-      },
-
-      dragLeave(node, direction, event) {
-        console.log('dragleave', direction,  event);
       }
     }
   })

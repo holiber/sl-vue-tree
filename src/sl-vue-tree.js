@@ -131,6 +131,7 @@ export default {
         // define the all ISlTreeNode computed props
         path: path,
         pathStr: JSON.stringify(path),
+        level: path.length,
         ind,
         isFirstChild: ind == 0,
         isLastChild: ind === siblings.length - 1
@@ -146,8 +147,8 @@ export default {
       this.getRoot().$emit('select', selectedNodes, event);
     },
 
-    emitDrop(targetNode, position, event) {
-      this.getRoot().$emit('drop', targetNode, position, event);
+    emitDrop(draggingNodes, position, event) {
+      this.getRoot().$emit('drop', draggingNodes, position, event);
     },
 
     emitToggle(toggledNode, event) {
@@ -287,6 +288,10 @@ export default {
       }
     },
 
+    getNodeEl(path) {
+      this.getRoot().$el.querySelector(`[path="${JSON.stringify(path)}"]`);
+    },
+
     getLastNode() {
       let lastNode  = null;
       this.traverse((node) => {
@@ -414,7 +419,7 @@ export default {
 
 
     onToggleHandler(event, node) {
-      this.updateNode(node, { isExpanded: !node.isExpanded });
+      this.updateNode(node.path, { isExpanded: !node.isExpanded });
       this.emitToggle(node, event);
       event.stopPropagation();
     },
@@ -442,15 +447,16 @@ export default {
     },
 
 
-    updateNode(nodeToUpdate, patch) {
+    updateNode(path, patch) {
       if (!this.isRoot) {
-        this.getParent().updateNode(nodeToUpdate, patch);
+        this.getParent().updateNode(path, patch);
         return;
       }
 
+      const pathStr = JSON.stringify(path);
       const newNodes = this.copy(this.value);
       this.traverse((node, nodeModel) => {
-        if (node.pathStr !== nodeToUpdate.pathStr) return;
+        if (node.pathStr !== pathStr) return;
         Object.assign(nodeModel, patch);
       }, newNodes);
 
