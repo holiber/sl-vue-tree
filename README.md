@@ -100,7 +100,7 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 interface ICursorPosition<TDataType> {
   node: ISlTreeNode<TDataType>;
   placement: 'before' | 'inside' | 'after';
-  }  
+}  
 ````
 
 # Events
