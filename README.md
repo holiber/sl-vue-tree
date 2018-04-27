@@ -4,8 +4,6 @@ Customizable draggable tree component for Vue.js
 
 ![preview](preview.png)
 
-[demo](demo/index.html)
-
 	
 # Quick start
 ````
@@ -155,3 +153,5 @@ Example: add a folder or item icon via `title` slot
 </sl-vue-tree>
 
 ````
+[demo](https://stream-labs.github.io/sl-vue-tree/demo/index)
+
