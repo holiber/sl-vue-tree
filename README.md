@@ -4,13 +4,15 @@ Customizable draggable tree component for Vue.js
 
 ![preview](preview.png)
 
-[demo](demo/index.html)
+[demo](https://stream-labs.github.io/sl-vue-tree/demo/index)
 
 install
 
 `npm i sl-vue-tree`
+
+
 	
-#Quick start
+# Quick start
 ````
 
 <div id="app">
@@ -80,7 +82,7 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 
 
 
-#Props
+# Props
 
 | prop             | type               | default | description                                                                                                                                                                                              |
 |------------------|--------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -90,7 +92,7 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 | scrollAreaHeight | Number             | 70      | Offset in pixels from top and bottom for the component element. If while dragging cursor is in that area, the scrolling starts.                                                                                |
 | maxScrollSpeed   | Number             | 20      | The scroll speed is relative to the cursor position. Defines the max scroll speed.             
 
-#Computed props
+# Computed props
 
 | prop           | type            | description                                                                                                                                                                                                                                                     |
 |----------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -103,10 +105,10 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 interface ICursorPosition<TDataType> {
   node: ISlTreeNode<TDataType>;
   placement: 'before' | 'inside' | 'after';
-  }  
+}  
 ````
 
-#Events
+# Events
 
 | event           | callback arguments                                                         | description                                       |
 |-----------------|----------------------------------------------------------------------------|---------------------------------------------------|
@@ -118,7 +120,7 @@ interface ICursorPosition<TDataType> {
 | nodedblclick    | node: ISlTreeNode, event: MouseEvent                                       | handle `dblclick` event on node                   |
 | nodecontextmenu | node: ISlTreeNode, event: MouseEvent                                       | handle `contextmenu` event on node                |
 
-#Methods
+# Methods
 
 
 | method                                                                                                   | description                                                                                        |
@@ -131,7 +133,7 @@ interface ICursorPosition<TDataType> {
 | getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using it's path                                                        |
 | getSelected(): ISlTreeNode[]                                                                             | Get selected nodes                                                                                 |
 
-#Slots
+# Slots
 
 
 | slot     | context     | description                                                                                   |
