@@ -22,12 +22,8 @@
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "rimraf": "^2.6.2",
-    "ts-loader": "^4.2.0",
-    "typescript": "^2.8.3",
     "vue": "^2.5.16",
-    "vue-class-component": "^6.2.0",
     "vue-loader": "^14.2.2",
-    "vue-property-decorator": "^6.0.0",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15"

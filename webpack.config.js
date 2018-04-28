@@ -39,16 +39,6 @@ module.exports = {
         }
       },
       {
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        exclude: /node_modules|vue\/src/
-      },
-      {
-        test: /\.ts$/,
-        enforce: 'pre',
-        loader: 'tslint-loader'
-      },
-      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
