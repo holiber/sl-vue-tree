@@ -6,6 +6,9 @@ Customizable draggable tree component for Vue.js
 
 [demo](demo/index.html)
 
+install
+
+`npm i sl-vue-tree`
 	
 #Quick start
 ````
