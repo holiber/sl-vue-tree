@@ -160,3 +160,5 @@ Example: add a folder or item icon via `title` slot
 </sl-vue-tree>
 
 ````
+
+[Contributing](CONTRIBUTING.md)
