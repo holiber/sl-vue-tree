@@ -305,6 +305,9 @@ export default {
     },
 
     onNodeMousedownHandler(event, node) {
+      // handle only left mouse button
+      if (event.button !== 0) return;
+
       if (!this.isRoot) {
         this.getRoot().onNodeMousedownHandler(event, node);
         return;
@@ -338,6 +341,9 @@ export default {
     },
 
     onNodeMouseupHandler(event, targetNode = null) {
+
+      // handle only left mouse button
+      if (event.button !== 0) return;
 
       if (!this.isRoot) {
         this.getRoot().onNodeMouseupHandler(event, targetNode);
@@ -497,6 +503,25 @@ export default {
       });
 
       return !shouldStop ? nodes : false;
+    },
+
+    remove(paths) {
+      const pathsStr = paths.map(path => JSON.stringify(path));
+      const newNodes = this.copy(this.value);
+      this.traverse( (node, nodeModel, siblings) => {
+        for (const pathStr of pathsStr) {
+          if (node.pathStr === pathStr) nodeModel._markToDelete = true;
+        }
+      }, newNodes);
+
+      this.traverse((node, nodeModel, siblings) => {
+        let i = siblings.length;
+        while (i--) {
+          if (siblings[i]._markToDelete) siblings.splice(i, 1);
+        }
+      }, newNodes);
+
+      this.emitInput(newNodes);
     },
 
     checkNodeIsParent(sourceNode, destNode) {

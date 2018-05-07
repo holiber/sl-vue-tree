@@ -132,6 +132,7 @@ interface ICursorPosition<TDataType> {
 | getLastNode(): ISlTreeNode                                                                               | Get the last node in the tree                                                                      |
 | getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using it's path                                                        |
 | getSelected(): ISlTreeNode[]                                                                             | Get selected nodes                                                                                 |
+| remove(paths: number[][])                                                                                | Remove nodes by paths. For example `.remove([[0,1], [0,2]])`
 
 # Slots
 

@@ -149,10 +149,8 @@
       removeNode() {
         this.contextMenuIsVisible = false;
         const $slVueTree = this.$refs.slVueTree;
-        $slVueTree.traverse((nodeModel, node, nodeModels) => {
-          if (!node.isSelected) return;
-          nodeModels.splice(node.ind, 1);
-        });
+        const paths = $slVueTree.getSelected().map(node => node.path);
+        $slVueTree.remove(paths);
       }
     }
   })
