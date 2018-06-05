@@ -155,6 +155,10 @@ export default {
       this.getRoot().$emit('toggle', toggledNode, event);
     },
 
+    emitNodeClick(node, event) {
+      this.getRoot().$emit('nodeclick', node, event);
+    },
+
     emitNodeDblclick(node, event) {
       this.getRoot().$emit('nodedblclick', node, event);
     },
@@ -163,9 +167,9 @@ export default {
       this.getRoot().$emit('nodecontextmenu', node, event);
     },
 
-
-    select(clickedNode, event = null, addToSelection = false) {
+    select(path, event = null, addToSelection = false) {
       addToSelection = ((event && event.ctrlKey) || addToSelection) && this.allowMultiselect;
+      const clickedNode = this.getNode(path);
       const newNodes = this.copy(this.value);
       const shiftSelectionMode = this.allowMultiselect && event.shiftKey && this.lastSelectedNode;
       const selectedNodes = [];
@@ -239,7 +243,7 @@ export default {
       const destNode = this.getNode(JSON.parse($nodeItem.getAttribute('path')));
 
       if (isDragStarted && !destNode.isSelected) {
-        this.select(destNode, event);
+        this.select(destNode.path, event);
       }
 
 
@@ -353,7 +357,7 @@ export default {
       this.mouseIsDown = false;
 
       if (!this.isDragging && targetNode) {
-        this.select(targetNode, event);
+        this.select(targetNode.path, event);
         return;
       }
 

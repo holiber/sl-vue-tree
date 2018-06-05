@@ -13,7 +13,7 @@ install
 
 	
 # Quick start
-````
+````html
 
 <div id="app">
   <sl-vue-tree v-model="nodes"/>
@@ -24,7 +24,7 @@ install
 
 <script>
 
-  var nodes = [
+    var nodes = [
     {title: 'Item1', isLeaf: true},
     {title: 'Item2', isLeaf: true, data: { visible: false }},
     {title: 'Folder1'},
@@ -32,7 +32,6 @@ install
       title: 'Folder2', isExpanded: true, children: [
         {title: 'Item3', isLeaf: true},
         {title: 'Item4', isLeaf: true}
-        }
       ]
     }
   ];
@@ -53,7 +52,7 @@ install
 
 The `value` property is array of `ISlTreeNodeModel` nodes:
 
-````
+````typescript
 interface ISlTreeNodeModel<TDataType> {
     title: string;
     isLeaf?: boolean;
@@ -66,7 +65,7 @@ interface ISlTreeNodeModel<TDataType> {
 
 For convenience the component's events returns `ISlTreeNode` objects those actually are `ISlTreeNodeModel`
 with some computed props:
-````
+````typescript
 interface ISlTreeNode<TDataType> extends ISlTreeNodeModel<TDataType> {
     isFirstChild: boolean;
     isLastChild: boolean;
@@ -128,6 +127,7 @@ interface ICursorPosition<TDataType> {
 | getNode(path: number[]): ISlTreeNode                                                                     | Find the node by using it's path                                                                   |
 | traverse(cb: (node: ISlTreeNode, nodeModel: ISlTreeNodeModel, siblings: ISlTreeNodeModel[])  => boolean) | Helpful method to traverse all nodes. The traversing will be stopped if callback returns `false`.  |
 | updateNode(path: number[], patch: Partial<ISlTreeNodeModel>)                                             | Update the node by using it's path                                                                 |
+| select(path: number[])                                                                                   | Select the node by using it's path                                                                 |
 | getFirstNode(): ISlTreeNode                                                                              | Get the first node in the tree                                                                     |
 | getLastNode(): ISlTreeNode                                                                               | Get the last node in the tree                                                                      |
 | getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using it's path                                                        |
@@ -145,8 +145,10 @@ interface ICursorPosition<TDataType> {
 | draginfo | SlVueTree   | Slot that follows the mouse cursor while dragging. By default shows the dragging nodes count. |
 
 
-Example: add a folder or item icon via `title` slot
-````
+## Example:
+
+add a folder or item icon via `title` slot
+````html
 <sl-vue-tree v-model="nodes">
     <template slot="title" slot-scope="{ node }">
 
@@ -161,5 +163,14 @@ Example: add a folder or item icon via `title` slot
 </sl-vue-tree>
 
 ````
+
+## Example:
+select all nodes
+
+```javascript
+slVueTree.traverse((node, nodeModel, path) => {
+    Vue.set(nodeModel, 'isSelected', true);
+})
+```
 
 [Contributing](CONTRIBUTING.md)

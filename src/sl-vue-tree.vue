@@ -32,6 +32,7 @@
             @mouseup="event => onNodeMouseupHandler(event, node)"
             @contextmenu="event =>emitNodeContextmenu(node, event)"
             @dblclick="event => emitNodeDblclick(node, event)"
+            @click="emitNodeClick(node, $event)"
             :path="node.pathStr"
             :class="{
             'sl-vue-tree-cursor-inside':

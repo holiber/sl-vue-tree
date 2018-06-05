@@ -116,13 +116,19 @@
        lastEvent: 'No last event'
      }
     },
+
+    mounted() {
+      // expose instance to the global namespace
+      window.slVueTree = this.$refs.slVueTree;
+    },
+
     methods: {
 
       toggleVisibility: function (event, node) {
         const slVueTree = this.$refs.slVueTree;
         event.stopPropagation();
         const visible = !node.data || node.data.visible !== false;
-        slVueTree.updateNode(node, {data: { visible: !visible}});
+        slVueTree.updateNode(node.path, {data: { visible: !visible}});
         this.lastEvent = `Node ${node.title} is ${ visible ? 'visible' : 'invisible'} now`;
       },
 

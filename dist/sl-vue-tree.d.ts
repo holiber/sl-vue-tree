@@ -41,4 +41,5 @@ export default class SlVueTree<TDataType> extends Vue {
     getSelected(): ISlTreeNode<TDataType>[];
     traverse(cb: (node: ISlTreeNode<TDataType>, nodeModel: ISlTreeNodeModel<TDataType>, siblings: ISlTreeNodeModel<TDataType>[]) => boolean | void, nodeModels?: ISlTreeNodeModel<TDataType>[], parentPath?: number[]): ISlTreeNode<TDataType>[] | boolean;
     getNodeEl(path: number[]): HTMLElement;
+    select(path: number[]): void;
 }
