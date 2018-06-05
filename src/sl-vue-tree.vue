@@ -3,8 +3,8 @@
       class="sl-vue-tree"
       :class="{'sl-vue-tree-root': isRoot }"
 
-      @mousemove="event => onNodeMousemoveHandler(event)"
-      @mouseleave="event => onMouseleaveHandler(event)"
+      @mousemove="onNodeMousemoveHandler"
+      @mouseleave="onMouseleaveHandler"
   >
     <div ref="nodes" class="sl-vue-tree-nodes-list">
       <div
@@ -13,7 +13,7 @@
       >
         <div
           class="sl-vue-tree-cursor sl-vue-tree-cursor_before"
-          @dragover="event => event.preventDefault()"
+          @dragover.prevent
           :style="{ visibility:
             cursorPosition &&
             cursorPosition.node.pathStr === node.pathStr &&
@@ -27,11 +27,11 @@
 
         <div
             class="sl-vue-tree-node-item"
-            @drop="event => onNodeDropHandler(event, node)"
-            @mousedown="event => onNodeMousedownHandler(event, node)"
-            @mouseup="event => onNodeMouseupHandler(event, node)"
-            @contextmenu="event =>emitNodeContextmenu(node, event)"
-            @dblclick="event => emitNodeDblclick(node, event)"
+            @drop="onNodeDropHandler($event, node)"
+            @mousedown="onNodeMousedownHandler($event, node)"
+            @mouseup="onNodeMouseupHandler($event, node)"
+            @contextmenu="emitNodeContextmenu(node, $event)"
+            @dblclick="emitNodeDblclick(node, $event)"
             :path="node.pathStr"
             :class="{
             'sl-vue-tree-cursor-inside':
@@ -56,7 +56,7 @@
           </div>
 
           <div class="sl-vue-tree-title">
-          <span class="sl-vue-tree-toggle" v-if="!node.isLeaf" @click="event => onToggleHandler(event, node)">
+          <span class="sl-vue-tree-toggle" v-if="!node.isLeaf" @click="onToggleHandler($event, node)">
             <slot name="toggle" :node="node">
               <span>
                {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
@@ -75,7 +75,7 @@
 
         <div
             class="sl-vue-tree-cursor sl-vue-tree-cursor_after"
-            @dragover="event => event.preventDefault()"
+            @dragover.prevent
             :style="{
               visibility:
                cursorPosition &&
@@ -96,7 +96,7 @@
             :allowMultiselect="allowMultiselect"
             :edgeSize="edgeSize"
             :showBranches="showBranches"
-            @dragover="event => event.preventDefault()"
+            @dragover.prevent
         >
           <template slot="title" slot-scope="{ node }">
             <slot name="title" :node="node">{{ node.title }}</slot>
