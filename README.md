@@ -127,7 +127,7 @@ interface ICursorPosition<TDataType> {
 | getNode(path: number[]): ISlTreeNode                                                                     | Find the node by using it's path                                                                   |
 | traverse(cb: (node: ISlTreeNode, nodeModel: ISlTreeNodeModel, siblings: ISlTreeNodeModel[])  => boolean) | Helpful method to traverse all nodes. The traversing will be stopped if callback returns `false`.  |
 | updateNode(path: number[], patch: Partial<ISlTreeNodeModel>)                                             | Update the node by using it's path                                                                 |
-| select(path: number[])                                                                                   | Select the node by using it's path                                                                 |
+| select(path: number[], addToSelection = false)                                                           | Select the node by using it's path                                                                 |
 | getFirstNode(): ISlTreeNode                                                                              | Get the first node in the tree                                                                     |
 | getLastNode(): ISlTreeNode                                                                               | Get the last node in the tree                                                                      |
 | getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using it's path                                                        |

@@ -116,7 +116,9 @@ export default {
     ) {
       const ind = path.slice(-1)[0];
       siblings = siblings || this.getNodeSiblings(this.value, path);
-      nodeModel = nodeModel || siblings[ind];
+      nodeModel = nodeModel || (siblings && siblings[ind]) || null;
+
+      if (!nodeModel) return null;
 
       const node = {
 
@@ -167,23 +169,24 @@ export default {
       this.getRoot().$emit('nodecontextmenu', node, event);
     },
 
-    select(path, event = null, addToSelection = false) {
+    select(path, addToSelection = false, event = null) {
       addToSelection = ((event && event.ctrlKey) || addToSelection) && this.allowMultiselect;
-      const clickedNode = this.getNode(path);
+      const selectedNode = this.getNode(path);
+      if (!selectedNode) return null;
       const newNodes = this.copy(this.value);
-      const shiftSelectionMode = this.allowMultiselect && event.shiftKey && this.lastSelectedNode;
+      const shiftSelectionMode = this.allowMultiselect && event && event.shiftKey && this.lastSelectedNode;
       const selectedNodes = [];
       let shiftSelectionStarted = false;
 
       this.traverse((node, nodeModel) => {
 
         if (shiftSelectionMode) {
-          if (node.pathStr === clickedNode.pathStr || node.pathStr === this.lastSelectedNode.pathStr) {
+          if (node.pathStr === selectedNode.pathStr || node.pathStr === this.lastSelectedNode.pathStr) {
             nodeModel.isSelected = true;
             shiftSelectionStarted = !shiftSelectionStarted;
           }
           if (shiftSelectionStarted) nodeModel.isSelected = true;
-        } else if (node.pathStr === clickedNode.pathStr) {
+        } else if (node.pathStr === selectedNode.pathStr) {
           nodeModel.isSelected = true;
         } else if (!addToSelection) {
           if (nodeModel.isSelected) nodeModel.isSelected = false;
@@ -194,9 +197,10 @@ export default {
       }, newNodes);
 
 
-      this.lastSelectedNode = clickedNode;
+      this.lastSelectedNode = selectedNode;
       this.emitInput(newNodes);
       this.emitSelect(selectedNodes, event);
+      return selectedNode;
     },
 
     onNodeMousemoveHandler(event) {
@@ -243,7 +247,7 @@ export default {
       const destNode = this.getNode(JSON.parse($nodeItem.getAttribute('path')));
 
       if (isDragStarted && !destNode.isSelected) {
-        this.select(destNode.path, event);
+        this.select(destNode.path, false, event);
       }
 
 
@@ -357,7 +361,7 @@ export default {
       this.mouseIsDown = false;
 
       if (!this.isDragging && targetNode) {
-        this.select(targetNode.path, event);
+        this.select(targetNode.path, false, event);
         return;
       }
 
