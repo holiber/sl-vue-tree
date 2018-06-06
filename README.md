@@ -174,3 +174,8 @@ slVueTree.traverse((node, nodeModel, path) => {
 ```
 
 [Contributing](CONTRIBUTING.md)
+
+# Changelog
+v1.5.0
+- `SlVueTree.select` method added
+- `SlVueTree.@nodeclick` event fixed
