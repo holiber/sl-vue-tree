@@ -176,6 +176,10 @@ slVueTree.traverse((node, nodeModel, path) => {
 [Contributing](CONTRIBUTING.md)
 
 # Changelog
+
+v1.5.1
+- improve drop on the bottom of tree https://github.com/holiber/sl-vue-tree/issues/5
+
 v1.5.0
 - `SlVueTree.select` method added
 - `SlVueTree.@nodeclick` event fixed
