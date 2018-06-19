@@ -101,33 +101,43 @@ export default {
       this.getParent().setCursorPosition(pos);
     },
 
-    getNodes(nodeModels, parentPath = []) {
+    getNodes(nodeModels, parentPath = [], isVisible = true) {
 
       return nodeModels.map((nodeModel, ind) => {
         const nodePath = parentPath.concat(ind);
-        return this.getNode(nodePath, nodeModel, nodeModels);
+        return this.getNode(nodePath, nodeModel, nodeModels, isVisible);
       })
     },
 
     getNode(
       path,
       nodeModel = null,
-      siblings = null
+      siblings = null,
+      isVisible = null
     ) {
       const ind = path.slice(-1)[0];
+
+      // calculate nodeModel, siblings, isVisible fields if it is not passed as arguments
       siblings = siblings || this.getNodeSiblings(this.value, path);
       nodeModel = nodeModel || (siblings && siblings[ind]) || null;
 
+      if (isVisible == null) {
+        isVisible = this.isVisible(path);
+      }
+
       if (!nodeModel) return null;
+
+      const isExpanded = nodeModel.isExpanded == void 0 ? true : !!nodeModel.isExpanded;
 
       const node = {
 
         // define the all ISlTreeNodeModel props
         title: nodeModel.title,
         isLeaf: !!nodeModel.isLeaf,
-        children: nodeModel.children ? this.getNodes(nodeModel.children, path) : [],
-        isExpanded: nodeModel.isExpanded == void 0 ? true : !!nodeModel.isExpanded,
+        children: nodeModel.children ? this.getNodes(nodeModel.children, path, isExpanded) : [],
         isSelected: !!nodeModel.isSelected,
+        isExpanded,
+        isVisible,
         data: nodeModel.data !== void 0 ? nodeModel.data : {},
 
         // define the all ISlTreeNode computed props
@@ -139,6 +149,21 @@ export default {
         isLastChild: ind === siblings.length - 1
       };
       return node;
+    },
+
+    isVisible(path) {
+      if (path.length < 2) return true;
+      let nodeModels = this.value;
+
+      for (let i = 0; i < path.length - 1; i++) {
+        let ind = path[i];
+        let nodeModel = nodeModels[ind];
+        let isExpanded = nodeModel.isExpanded == void 0 ? true : !!nodeModel.isExpanded;
+        if (!isExpanded) return false;
+        nodeModels = nodeModel.children;
+      }
+
+      return true;
     },
 
     emitInput(newValue) {
@@ -314,6 +339,65 @@ export default {
 
     getFirstNode() {
       return this.getNode([0]);
+    },
+
+    getNextNode(path, filter = null) {
+
+      let resultNode = null;
+
+      this.traverse((node) => {
+        if (this.comparePaths(node.path, path) < 1) return;
+
+        if (!filter || filter(node)) {
+          resultNode = node;
+          return false; // stop traverse
+        }
+
+      });
+
+      return resultNode;
+    },
+
+    getPrevNode(path, filter) {
+      let prevNodes = [];
+
+      this.traverse((node) => {
+        if (this.comparePaths(node.path, path) >= 0) {
+          return false;
+        }
+        prevNodes.push(node);
+      });
+
+      let i = prevNodes.length;
+      while (i--) {
+        const node = prevNodes[i];
+        if (!filter || filter(node)) return node;
+      }
+
+      return null;
+    },
+
+    /**
+     * returns 1 if path1 > path2
+     * returns -1 if path1 < path2
+     * returns 0 if path1 == path2
+     *
+     * examples
+     *
+     * [1, 2, 3] < [1, 2, 4]
+     * [1, 1, 3] < [1, 2, 3]
+     * [1, 2, 3] > [1, 2, 0]
+     * [1, 2, 3] > [1, 1, 3]
+     * [1, 2] < [1, 2, 0]
+     *
+     */
+    comparePaths(path1, path2) {
+      for (let i = 0; i < path1.length; i++) {
+        if (path2[i] == void 0) return 1;
+        if (path1[i] > path2[i]) return 1;
+        if (path1[i] < path2[i]) return -1;
+      }
+      return path2[path1.length] == void 0 ? 0 : -1;
     },
 
     onNodeMousedownHandler(event, node) {
@@ -501,18 +585,20 @@ export default {
 
       const nodes = [];
 
-      nodeModels.forEach((nodeModel, nodeInd) => {
+      for (let nodeInd = 0; nodeInd < nodeModels.length; nodeInd++) {
+        const nodeModel = nodeModels[nodeInd];
         const itemPath = parentPath.concat(nodeInd);
         const node = this.getNode(itemPath, nodeModel, nodeModels);
         shouldStop = cb(node, nodeModel, nodeModels) === false;
         nodes.push(node);
 
-        if (shouldStop) return false;
+        if (shouldStop) break;
 
         if (nodeModel.children) {
           shouldStop = this.traverse(cb, nodeModel.children, itemPath) === false;
+          if (shouldStop) break;
         }
-      });
+      }
 
       return !shouldStop ? nodes : false;
     },

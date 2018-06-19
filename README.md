@@ -127,12 +127,14 @@ interface ICursorPosition<TDataType> {
 | getNode(path: number[]): ISlTreeNode                                                                     | Find the node by using it's path                                                                   |
 | traverse(cb: (node: ISlTreeNode, nodeModel: ISlTreeNodeModel, siblings: ISlTreeNodeModel[])  => boolean) | Helpful method to traverse all nodes. The traversing will be stopped if callback returns `false`.  |
 | updateNode(path: number[], patch: Partial<ISlTreeNodeModel>)                                             | Update the node by using it's path                                                                 |
-| select(path: number[], addToSelection = false)                                                           | Select the node by using it's path                                                                 |
-| getFirstNode(): ISlTreeNode                                                                              | Get the first node in the tree                                                                     |
-| getLastNode(): ISlTreeNode                                                                               | Get the last node in the tree                                                                      |
+| select(path: number[], addToSelection = false)                                                           | Select the node by using it's path                                                                 |                                                                                                                                              |
 | getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using it's path                                                        |
 | getSelected(): ISlTreeNode[]                                                                             | Get selected nodes                                                                                 |
 | remove(paths: number[][])                                                                                | Remove nodes by paths. For example `.remove([[0,1], [0,2]])`
+| getFirstNode(): ISlTreeNode                                                                              | Get the first node in the tree                                                                     |
+| getLastNode(): ISlTreeNode                                                                               | Get the last node in the tree
+| getNextNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>; | Get the next node. You can skip the next nodes by using `filter`
+| getPrevNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>; | Get the previous node. You can skip the previous nodes by using `filter`
 
 # Slots
 
@@ -144,6 +146,11 @@ interface ICursorPosition<TDataType> {
 | sidebar  | ISlTreeNode | Sidebar content                                                                               |
 | draginfo | SlVueTree   | Slot that follows the mouse cursor while dragging. By default shows the dragging nodes count. |
 
+## Example:
+
+handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
+
+[demo](https://stream-labs.github.io/sl-vue-tree/demo/keyboardcontrol)
 
 ## Example:
 

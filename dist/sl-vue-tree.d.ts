@@ -8,6 +8,7 @@ export interface ISlTreeNodeModel<TDataType> {
     data?: TDataType;
 }
 export interface ISlTreeNode<TDataType> extends ISlTreeNodeModel<TDataType> {
+    isVisible?: boolean;
     isFirstChild: boolean;
     isLastChild: boolean;
     ind: number;
@@ -37,6 +38,10 @@ export default class SlVueTree<TDataType> extends Vue {
     draggingNode: ISlTreeNode<TDataType>;
     readonly nodes: ISlTreeNode<TDataType>[];
     getNode(path: number[]): ISlTreeNode<TDataType>;
+    getFirstNode(): ISlTreeNode<TDataType>;
+    getLastNode(): ISlTreeNode<TDataType>;
+    getNextNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>;
+    getPrevNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>;
     updateNode(nodeToUpdate: ISlTreeNode<TDataType>, patch: Partial<ISlTreeNodeModel<TDataType>>): void;
     getSelected(): ISlTreeNode<TDataType>[];
     traverse(cb: (node: ISlTreeNode<TDataType>, nodeModel: ISlTreeNodeModel<TDataType>, siblings: ISlTreeNodeModel<TDataType>[]) => boolean | void, nodeModels?: ISlTreeNodeModel<TDataType>[], parentPath?: number[]): ISlTreeNode<TDataType>[] | boolean;
