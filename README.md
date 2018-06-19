@@ -183,6 +183,9 @@ slVueTree.traverse((node, nodeModel, path) => {
 [Contributing](CONTRIBUTING.md)
 
 # Changelog
+v1.6.0
+
+- added `getNextNode` and `getPrevNode` methods https://github.com/holiber/sl-vue-tree/issues/6
 
 v1.5.1
 - improve drop on the bottom of tree https://github.com/holiber/sl-vue-tree/issues/5
