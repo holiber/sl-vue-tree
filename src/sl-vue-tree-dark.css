@@ -22,7 +22,8 @@
     color: white;
 }
 
-.sl-vue-tree-node-item:hover {
+.sl-vue-tree-node-item:hover,
+.sl-vue-tree-node-item.sl-vue-tree-cursor-hover {
     color: white;
 }
 

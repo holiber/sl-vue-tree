@@ -203,9 +203,9 @@ export default {
       return selectedNode;
     },
 
-    onNodeMousemoveHandler(event) {
+    onMousemoveHandler(event) {
       if (!this.isRoot) {
-        this.getRoot().onNodeMousemoveHandler(event);
+        this.getRoot().onMousemoveHandler(event);
         return;
       }
 
@@ -218,13 +218,10 @@ export default {
 
       const isDragStarted = initialDraggingState === false && this.isDragging === true;
 
-
-
       this.lastMousePos = {
         x: event.clientX,
         y: event.clientY
       };
-
 
       if (!this.isDragging) return;
 
@@ -241,34 +238,41 @@ export default {
 
       const $target = document.elementFromPoint(event.clientX, event.clientY);
       const $nodeItem = $target.getAttribute('path') ? $target : $target.closest('[path]');
-
-      if (!$nodeItem) return;
-
-      const destNode = this.getNode(JSON.parse($nodeItem.getAttribute('path')));
-
-      if (isDragStarted && !destNode.isSelected) {
-        this.select(destNode.path, false, event);
-      }
-
-
-      const nodeHeight = $nodeItem.offsetHeight;
-      const edgeSize = this.edgeSize;
       const offsetY = event.offsetY;
+      let destNode;
       let placement;
 
+      if ($nodeItem) {
 
-      if (destNode.isLeaf) {
-        placement = offsetY >= nodeHeight / 2 ? 'after' : 'before';
-      } else {
-        if (offsetY <= edgeSize) {
-          placement = 'before';
-        } else if (offsetY >= nodeHeight - edgeSize) {
-          placement = 'after';
-        } else {
-          placement = 'inside';
+        if (!$nodeItem) return;
+
+        destNode = this.getNode(JSON.parse($nodeItem.getAttribute('path')));
+
+        if (isDragStarted && !destNode.isSelected) {
+          this.select(destNode.path, false, event);
         }
-      }
 
+
+        const nodeHeight = $nodeItem.offsetHeight;
+        const edgeSize = this.edgeSize;
+
+
+        if (destNode.isLeaf) {
+          placement = offsetY >= nodeHeight / 2 ? 'after' : 'before';
+        } else {
+          if (offsetY <= edgeSize) {
+            placement = 'before';
+          } else if (offsetY >= nodeHeight - edgeSize) {
+            placement = 'after';
+          } else {
+            placement = 'inside';
+          }
+        }
+      } else {
+        if (offsetY < rootRect.height / 2) return;
+        placement = 'after';
+        destNode = this.nodes.slice(-1)[0];
+      }
       this.setCursorPosition({ node: destNode, placement });
 
       const scrollBottomLine = rootRect.bottom - this.scrollAreaHeight;
@@ -290,7 +294,7 @@ export default {
       const $root = this.getRoot().$el;
       const rootRect = $root.getBoundingClientRect();
       if (event.clientY >= rootRect.bottom) {
-        this.setCursorPosition({ node: this.getLastNode(), placement: 'after' });
+        this.setCursorPosition({ node: this.nodes.slice(-1)[0], placement: 'after' });
       } else if (event.clientY < rootRect.top) {
         this.setCursorPosition({ node: this.getFirstNode(), placement: 'before'});
       }

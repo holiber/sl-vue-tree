@@ -2,8 +2,7 @@
   <div
       class="sl-vue-tree"
       :class="{'sl-vue-tree-root': isRoot }"
-
-      @mousemove="onNodeMousemoveHandler"
+      @mousemove="onMousemoveHandler"
       @mouseleave="onMouseleaveHandler"
   >
     <div ref="nodes" class="sl-vue-tree-nodes-list">
@@ -27,7 +26,6 @@
 
         <div
             class="sl-vue-tree-node-item"
-            @drop="onNodeDropHandler($event, node)"
             @mousedown="onNodeMousedownHandler($event, node)"
             @mouseup="onNodeMouseupHandler($event, node)"
             @contextmenu="emitNodeContextmenu(node, $event)"
@@ -35,6 +33,10 @@
             @click="emitNodeClick(node, $event)"
             :path="node.pathStr"
             :class="{
+            'sl-vue-tree-cursor-hover':
+              cursorPosition &&
+              cursorPosition.node.pathStr === node.pathStr,
+
             'sl-vue-tree-cursor-inside':
               cursorPosition &&
               cursorPosition.placement === 'inside' &&
@@ -74,21 +76,6 @@
 
         </div>
 
-        <div
-            class="sl-vue-tree-cursor sl-vue-tree-cursor_after"
-            @dragover.prevent
-            :style="{
-              visibility:
-               cursorPosition &&
-               cursorPosition.node.pathStr === node.pathStr &&
-               cursorPosition.placement === 'after' ?
-               'visible' :
-               'hidden'
-             }"
-        >
-          <!-- suggested place for node insertion  -->
-        </div>
-
         <sl-vue-tree
             v-if="node.children && node.children.length && node.isExpanded"
             :value="node.children"
@@ -116,6 +103,22 @@
           </template>
 
         </sl-vue-tree>
+
+        <div
+            class="sl-vue-tree-cursor sl-vue-tree-cursor_after"
+            @dragover.prevent
+            :style="{
+              visibility:
+               cursorPosition &&
+               cursorPosition.node.pathStr === node.pathStr &&
+               cursorPosition.placement === 'after' ?
+               'visible' :
+               'hidden'
+             }"
+        >
+          <!-- suggested place for node insertion  -->
+        </div>
+
       </div>
 
       <div v-show="isDragging" ref="dragInfo" class="sl-vue-tree-drag-info">

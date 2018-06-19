@@ -87,8 +87,8 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 |------------------|--------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | value            | ISlTreeNodeModel[] | []      | An array of nodes to show. Each node represented by `ISlTreeNodeModel` interface                                                                                                                              |
 | allowMultiselect | Boolean            | true    | Disable or enable the multiselect feature                                                                                                                                                                |
-| edgeSize         | Number             | 3       | Offset in pixels from top and bottom for folder-node element. If while dragging cursor is in that offset, the dragging node will be placed before or after the folder-node instead to be placed inside the folder. |
-| scrollAreaHeight | Number             | 70      | Offset in pixels from top and bottom for the component element. If while dragging cursor is in that area, the scrolling starts.                                                                                |
+| edgeSize         | Number             | 3       | Offset in pixels from top and bottom for folder-node element. While dragging cursor is in that offset, the dragging node will be placed before or after the folder-node instead to be placed inside the folder. |
+| scrollAreaHeight | Number             | 70      | Offset in pixels from top and bottom for the component element. While dragging cursor is in that area, the scrolling starts.                                                                                |
 | maxScrollSpeed   | Number             | 20      | The scroll speed is relative to the cursor position. Defines the max scroll speed.             
 
 # Computed props
