@@ -188,6 +188,10 @@ handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
 [Contributing](CONTRIBUTING.md)
 
 # Changelog
+v1.7.0
+
+- added `isSelectable` and `isDraggable` flags
+
 v1.6.0
 
 - added `getNextNode` and `getPrevNode` methods https://github.com/holiber/sl-vue-tree/issues/6
