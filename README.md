@@ -71,6 +71,7 @@ with some computed props:
 interface ISlTreeNode<TDataType> extends ISlTreeNodeModel<TDataType> {
     isFirstChild: boolean;
     isLastChild: boolean;
+    isVisible: boolean;	// node is visible if the all of it's parents are expanded
     level: number; // nesting level
     ind: number; // index in the array of siblings 
     path: number[]; // path to node as array of indexes, for exaple [2, 0, 1] in example above is path to `Item4` 
@@ -187,6 +188,9 @@ handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
 [Contributing](CONTRIBUTING.md)
 
 # Changelog
+v1.6.0
+
+- added `getNextNode` and `getPrevNode` methods https://github.com/holiber/sl-vue-tree/issues/6
 
 v1.5.1
 - improve drop on the bottom of tree https://github.com/holiber/sl-vue-tree/issues/5
