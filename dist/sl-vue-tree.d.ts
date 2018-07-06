@@ -5,6 +5,8 @@ export interface ISlTreeNodeModel<TDataType> {
     children?: ISlTreeNodeModel<TDataType>[];
     isExpanded?: boolean;
     isSelected?: boolean;
+    isDraggable?: boolean;
+    isSelectable?: boolean;
     data?: TDataType;
 }
 export interface ISlTreeNode<TDataType> extends ISlTreeNodeModel<TDataType> {

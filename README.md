@@ -59,6 +59,8 @@ interface ISlTreeNodeModel<TDataType> {
     children?: ISlTreeNodeModel<TDataType>[];
     isExpanded?: boolean;
     isSelected?: boolean;
+    isDraggable?: boolean;
+    isSelectable?: boolean;
     data?: TDataType; // any serializable user data
 }
 ````
@@ -98,6 +100,7 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 | nodes          | ISlTreeNode[]   | List of nodes with some computed props. See `ISlTreeNode` interface.                                                                                                                                                                                            |
 | cursorPosition | ICursorPosition | Represents the current cursor position that describes the action that will be applied to the dragged node while `mouseup` event. See `ICursorPosition` interface |
 | selectionSize  | Number          | The count of selected nodes
+| dragSize       | Number          | The count of selected and draggable nodes
 | isDragging     | Boolean         | True if nodes are dragging
 
 ````
@@ -146,11 +149,6 @@ interface ICursorPosition<TDataType> {
 | sidebar  | ISlTreeNode | Sidebar content                                                                               |
 | draginfo | SlVueTree   | Slot that follows the mouse cursor while dragging. By default shows the dragging nodes count. |
 
-## Example:
-
-handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
-
-[demo](https://stream-labs.github.io/sl-vue-tree/demo/keyboardcontrol)
 
 ## Example:
 
@@ -179,6 +177,12 @@ slVueTree.traverse((node, nodeModel, path) => {
     Vue.set(nodeModel, 'isSelected', true);
 })
 ```
+
+## Example:
+
+handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
+
+[demo](https://stream-labs.github.io/sl-vue-tree/demo/keyboardcontrol)
 
 [Contributing](CONTRIBUTING.md)
 
