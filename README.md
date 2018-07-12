@@ -65,7 +65,7 @@ interface ISlTreeNodeModel<TDataType> {
 }
 ````
 
-For convenience the component's events returns `ISlTreeNode` objects those actually are `ISlTreeNodeModel`
+For convenience the component's events return `ISlTreeNode` objects those actually are `ISlTreeNodeModel`
 with some computed props:
 ````typescript
 interface ISlTreeNode<TDataType> extends ISlTreeNodeModel<TDataType> {
