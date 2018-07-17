@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>sl-vue-tree</title>
+  <link rel="stylesheet" href="../dist/sl-vue-tree-dark.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="../dist/sl-vue-tree.js"></script>
+</head>
+<body>
+
+<div id="app"
+>
+
+  <h2> Sl-vue-tree - drag external elements</h2>
+
+
+  <div class="row">
+    <div class="tree-container">
+      <sl-vue-tree
+          v-model="nodes"
+          ref="slVueTree"
+          @externaldrop="onExternalDropHandler"
+      >
+
+        <template slot="title" slot-scope="{ node }">
+          <span class="item-icon">
+            <i class="fa fa-file" v-if="node.isLeaf"></i>
+            <i class="fa fa-folder" v-if="!node.isLeaf"></i>
+          </span>
+
+          {{ node.title }}
+        </template>
+
+
+        <template slot="toggle" slot-scope="{ node }">
+          <span v-if="!node.isLeaf">
+            <i v-if="node.isExpanded" class="fa fa-chevron-down"></i>
+            <i v-if="!node.isExpanded" class="fa fa-chevron-right"></i>
+          </span>
+        </template>
+
+
+      </sl-vue-tree>
+
+      <div class="dragme" draggable="true">
+        <i class="fa fa-file"></i> <br/><br/>
+        Drag Me!
+      </div>
+
+      <div class="dragme" draggable="true">
+        <i class="fa fa-file"></i> <br/><br/>
+        Drag Me!
+      </div>
+
+      <div class="dragme" draggable="true">
+        <i class="fa fa-file"></i> <br/><br/>
+        Drag Me!
+      </div>
+
+    </div>
+
+
+    <div class="json-preview">
+      <pre>{{ JSON.stringify(nodes, null, 4)}}</pre>
+    </div>
+
+  </div>
+
+
+
+</div>
+
+<script>
+
+  var nodes = [
+    {title: 'Item1', isLeaf: true},
+    {title: 'Item2', isLeaf: true},
+    {
+      title: 'Folder1', isExpanded: false, children: [
+        {title: 'Item3', isLeaf: true},
+        {title: 'Item4', isLeaf: true},
+        {
+          title: 'Folder2', children: [
+            {title: 'Item5', isLeaf: true}
+          ]
+        }
+      ]
+    },
+    {title: 'Item6', isLeaf: true}
+  ];
+
+  new Vue({
+    el: '#app',
+    components: { SlVueTree },
+    data: function () {
+     return {
+       nodes: nodes
+     }
+    },
+
+    mounted() {
+      // expose instance to the global namespace for better debugging
+      window.slVueTree = this.$refs.slVueTree;
+
+    },
+
+
+
+    methods: {
+
+      onExternalDropHandler(cursorPosition, event) {
+        console.log('external drop', cursorPosition);
+      }
+
+    }
+  })
+</script>
+
+<style>
+
+  body {
+    background: #050d12;
+    font-family: Arial;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  a {
+    color: #bbb;
+  }
+
+  .row {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .tree-container {
+    flex-grow: 1;
+  }
+
+  .sl-vue-tree.sl-vue-tree-root {
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 300px;
+  }
+
+
+  .json-preview {
+    flex-grow: 1;
+    margin-left: 10px;
+    background-color: #13242d;
+    border: 1px solid black;
+    padding: 10px;
+  }
+
+  .item-icon {
+    display: inline-block;
+    text-align: left;
+    width: 20px;
+  }
+
+  .dragme {
+    text-align: center;
+    display: inline-block;
+    padding: 10px;
+  }
+
+  .dragme .fa {
+    font-size: 80px;
+  }
+
+
+</style>
+
+</body>
+</html>

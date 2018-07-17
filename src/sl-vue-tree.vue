@@ -4,6 +4,7 @@
       :class="{'sl-vue-tree-root': isRoot }"
       @mousemove="onMousemoveHandler"
       @mouseleave="onMouseleaveHandler"
+      @dragend="onDragendHandler(null, $event)"
   >
     <div ref="nodes" class="sl-vue-tree-nodes-list">
       <div
@@ -31,6 +32,8 @@
             @contextmenu="emitNodeContextmenu(node, $event)"
             @dblclick="emitNodeDblclick(node, $event)"
             @click="emitNodeClick(node, $event)"
+            @dragover="onExternalDragoverHandler(node, $event)"
+            @drop="onExternalDropHandler(node, $event)"
             :path="node.pathStr"
             :class="{
             'sl-vue-tree-cursor-hover':
