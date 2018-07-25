@@ -234,7 +234,7 @@ export default {
     },
 
     select(path, addToSelection = false, event = null) {
-      addToSelection = ((event && event[this.multiSelectKey]) || addToSelection) && this.allowMultiselect
+      addToSelection = ((event && event[this.multiSelectKey]) || addToSelection) && this.allowMultiselect;
       const selectedNode = this.getNode(path);
       if (!selectedNode) return null;
       const newNodes = this.copy(this.currentValue);
