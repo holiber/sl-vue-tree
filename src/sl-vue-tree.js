@@ -234,13 +234,13 @@ export default {
     },
 
     select(path, addToSelection = false, event = null) {
+      addToSelection = ((event && event[this.multiSelectKey]) || addToSelection) && this.allowMultiselect
       const selectedNode = this.getNode(path);
       if (!selectedNode) return null;
       const newNodes = this.copy(this.currentValue);
       const shiftSelectionMode = this.allowMultiselect && event && event.shiftKey && this.lastSelectedNode;
       const selectedNodes = [];
       let shiftSelectionStarted = false;
-      addToSelection = ((event && event[this.multiSelectKey]) || addToSelection) && this.allowMultiselect
 
       this.traverse((node, nodeModel) => {
 
