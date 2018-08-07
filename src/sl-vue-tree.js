@@ -25,6 +25,16 @@ export default {
       type: Boolean,
       default: true
     },
+    multiselectKey: {
+      type: [String, Array],
+      default: ['ctrlKey', 'metaKey'],
+      validator: function (value) {
+        let allowedKeys = ['ctrlKey', 'metaKey', 'altKey'];
+        let multiselectKeys = Array.isArray(value) ? value : [value];
+        multiselectKeys = multiselectKeys.filter(keyName => allowedKeys.indexOf(keyName ) !== -1);
+        return !!multiselectKeys.length;
+      }
+    },
     scrollAreaHeight: {
       type: Number,
       default: 70
@@ -227,7 +237,12 @@ export default {
     },
 
     select(path, addToSelection = false, event = null) {
-      addToSelection = ((event && event.ctrlKey) || addToSelection) && this.allowMultiselect;
+      const multiselectKeys = Array.isArray(this.multiSelectKey) ?
+        this.multiselectKey:
+        [this.multiselectKey];
+      const multiselectKeyIsPressed = event && !!multiselectKeys.find(key => event[key]);
+      addToSelection = (multiselectKeyIsPressed || addToSelection) && this.allowMultiselect ;
+
       const selectedNode = this.getNode(path);
       if (!selectedNode) return null;
       const newNodes = this.copy(this.currentValue);
