@@ -1,6 +1,6 @@
 {
   "name": "sl-vue-tree",
-  "version": "1.7.0",
+  "version": "2.0.0-alpha",
   "description": "draggable tree vue component",
   "main": "dist/sl-vue-tree.js",
   "types": "dist/sl-vue-tree.d.ts",
@@ -22,6 +22,7 @@
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "rimraf": "^2.6.2",
+    "typescript": "^3.0.1",
     "vue": "^2.5.16",
     "vue-loader": "^14.2.2",
     "vue-template-compiler": "^2.5.16",
