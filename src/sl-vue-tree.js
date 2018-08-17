@@ -1,3 +1,6 @@
+//const deepcopy = require('deepcopy');
+var clone = require('clone');
+
 export default {
     name: 'sl-vue-tree',
     props: {
@@ -711,8 +714,10 @@ export default {
         },
 
         copy(entity) {
-            console.log(JSON.parse(JSON.stringify(entity), this.reviver))
-            return JSON.parse(JSON.stringify(entity), this.reviver);
+            //console.log(JSON.parse(JSON.stringify(entity), this.reviver))
+            //return JSON.parse(JSON.stringify(entity), this.reviver);
+            //return deepcopy(entity)
+            return clone(entity)
         },
 
         reviver(k, v) {
