@@ -67,7 +67,8 @@
               <!-- <span>
                {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
               </span> -->
-              <img v-if="node.isLeaf && !node.isExpanded" src="./img/triangle-down.svg">
+              <img v-if="!node.isLeaf && !node.isExpanded" src="./img/triangle-right.svg">
+              <img v-if="!node.isLeaf && node.isExpanded" src="./img/triangle-down.svg">
 
             </slot>
           </span>
