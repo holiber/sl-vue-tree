@@ -714,18 +714,7 @@ export default {
         },
 
         copy(entity) {
-            //console.log(JSON.parse(JSON.stringify(entity), this.reviver))
-            //return JSON.parse(JSON.stringify(entity), this.reviver);
-            //return deepcopy(entity)
             return clone(entity)
-        },
-
-        reviver(k, v) {
-            if (typeof v === 'string' && v.match(/^function/)) {
-                return Function.call(this, 'return ' + v)();
-            }
-
-            return v;
         }
 
     }
