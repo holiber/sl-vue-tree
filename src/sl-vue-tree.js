@@ -711,7 +711,7 @@ export default {
         },
 
         copy(entity) {
-            return JSON.parse(JSON.stringify(entity), this.reviver);
+            return () => JSON.parse(JSON.stringify(entity), this.reviver);
         },
 
         reviver(k, v) {
