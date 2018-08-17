@@ -64,9 +64,11 @@
           <div class="sl-vue-tree-title">
           <span class="sl-vue-tree-toggle" v-if="!node.isLeaf" @click="onToggleHandler($event, node)">
             <slot name="toggle" :node="node">
-              <span>
+              <!-- <span>
                {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
-              </span>
+              </span> -->
+              <img v-if="node.isLeaf && !node.isExpanded" src="./img/triangle-down.svg">
+
             </slot>
           </span>
 

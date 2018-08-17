@@ -1,4 +1,3 @@
-//const deepcopy = require('deepcopy');
 var clone = require('clone');
 
 export default {
