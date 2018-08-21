@@ -65,10 +65,10 @@
             <span class="sl-vue-tree-toggle" v-if="!node.isLeaf" @click="onToggleHandler($event, node)">
               <slot name="toggle" :node="node">
                 <span>
-                  <img v-if="node.isExpanded && !node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
-                  <img v-if="node.isExpanded && node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDownBlue.png">
-                  <img v-if="!node.isExpanded && !node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
-                  <img v-if="!node.isExpanded && node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRightBlue.png">
+                  <img class="arrowDown" v-if="node.isExpanded && !node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
+                  <img class="arrowDown" v-if="node.isExpanded && node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDownBlue.png">
+                  <img class="arrowRight" v-if="!node.isExpanded && !node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
+                  <img class="arrowRight" v-if="!node.isExpanded && node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRightBlue.png">
                 </span>
 
                 <img v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folderBlue.png">
