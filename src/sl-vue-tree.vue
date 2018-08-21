@@ -67,7 +67,7 @@
               <!-- <span>
                {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
               </span> -->
-              <span>
+              <span @click="console.log(node)">
                 <img v-if="!node.isLeaf && !node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
                 <img v-if="!node.isLeaf && node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
               </span>
