@@ -81,6 +81,12 @@
               </slot>
             </span>
 
+            <span v-if='node.shapeType == "imageShape"'>
+              <slot name="toggle" :node="node">
+                <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIcon.png">
+              </slot>
+            </span>
+
             <!-- <slot name="title" :node="node">{{ node.title }}</slot> -->
           </div>
 
@@ -108,9 +114,12 @@
 
           <template slot="toggle" slot-scope="{ node }">
             <slot name="toggle" :node="node">
-            <span>
-               {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
-            </span>
+                <span>
+                  <img v-if="!node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
+                  <img v-else src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
+                </span>
+
+                <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
             </slot>
           </template>
 
