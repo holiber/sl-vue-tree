@@ -67,8 +67,8 @@
               <!-- <span>
                {{ !node.isLeaf ? (node.isExpanded ? '-' : '+') : '' }}
               </span> -->
-              <img v-if="!node.isLeaf && !node.isExpanded" src="https://image.freepik.com/free-icon/no-translate-detected_318-40204.jpg">
-              <img v-if="!node.isLeaf && node.isExpanded" src="https://image.freepik.com/free-icon/no-translate-detected_318-40204.jpg">
+              <img v-if="!node.isLeaf && !node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.svg">
+              <img v-if="!node.isLeaf && node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.svg">
 
             </slot>
           </span>
