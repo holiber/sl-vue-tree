@@ -80,13 +80,15 @@
 
             <span v-if='node.shapeType == "simpleTextShape"'>
               <slot name="toggle" :node="node">
-                <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png">
+                <img v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIconBlue.png">
+                <img v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png">
               </slot>
             </span>
 
             <span v-if='node.shapeType == "imageShape"'>
               <slot name="toggle" :node="node">
-                <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIcon.png">
+                <img v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIconBlue.png">
+                <img v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIcon.png">
               </slot>
             </span>
 
@@ -119,22 +121,28 @@
             <slot name="toggle" :node="node">
                 <span v-if="!node.isLeaf">
                   <span>
-                    <img v-if="node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
-                    <img v-else src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
+                    <img v-if="node.isExpanded && !node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
+                    <img v-if="node.isExpanded && node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDownBlue.png">
+                    <img v-if="!node.isExpanded && !node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
+                    <img v-if="!node.isExpanded && node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRightBlue.png">
                   </span>
 
-                  <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
+                  <img v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folderBlue.png">
+                  <img v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
+                
                 </span>
 
-                <span v-if='node.shapeType == "simpleTextShape"'>
+                 <span v-if='node.shapeType == "simpleTextShape"'>
                   <slot name="toggle" :node="node">
-                    <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png">
+                    <img v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIconBlue.png">
+                    <img v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png">
                   </slot>
                 </span>
 
                 <span v-if='node.shapeType == "imageShape"'>
                   <slot name="toggle" :node="node">
-                    <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIcon.png">
+                    <img v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIconBlue.png">
+                    <img v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIcon.png">
                   </slot>
                 </span>
             </slot>
