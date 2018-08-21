@@ -75,8 +75,8 @@
                   <!-- </span> -->
                 </span>
 
-                <img v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folderBlue.png">
-                <img v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
+                <img class="folder" v-if="node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folderBlue.png">
+                <img class="folder" v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
                 
 
               </slot>
