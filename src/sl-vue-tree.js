@@ -154,14 +154,12 @@ export default {
             const isDraggable = nodeModel.isDraggable == void 0 ? true : !!nodeModel.isDraggable;
             const isSelectable = nodeModel.isSelectable == void 0 ? true : !!nodeModel.isSelectable;
 
-            const shapeType = nodeModel.shapeType == void 0 ? true : !!nodeModel.shapeType;
-
             const node = {
 
                 // define the all ISlTreeNodeModel props
                 title: nodeModel.title,
-                shapeType,
                 isLeaf: !!nodeModel.isLeaf,
+                shapeType: nodeModel.shapeType,
                 children: nodeModel.children ? this.getNodes(nodeModel.children, path, isExpanded) : [],
                 isSelected: !!nodeModel.isSelected,
                 isExpanded,
