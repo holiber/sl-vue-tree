@@ -75,7 +75,7 @@
               <!-- <slot name="title" :node="node">{{ node.title }}</slot> -->
             </span>
 
-            <span v-if='shapeType == "simpleTextShape"'>
+            <span v-if='node.shapeType == "simpleTextShape"'>
               <slot name="toggle" :node="node">
                 <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png">
               </slot>
