@@ -65,7 +65,7 @@
             <span class="sl-vue-tree-toggle" v-if="!node.isLeaf" @click="onToggleHandler($event, node)">
               <slot name="toggle" :node="node">
                 <span>
-                  <img v-if="!node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
+                  <img v-if="node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
                   <img v-else src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
                 </span>
 
@@ -114,12 +114,26 @@
 
           <template slot="toggle" slot-scope="{ node }">
             <slot name="toggle" :node="node">
-                <span>
-                  <img v-if="!node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
-                  <img v-else src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
+                <span v-if="!node.isLeaf">
+                  <span>
+                    <img v-if="node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
+                    <img v-else src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
+                  </span>
+
+                  <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
                 </span>
 
-                <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
+                <span v-if='node.shapeType == "simpleTextShape"'>
+                  <slot name="toggle" :node="node">
+                    <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png">
+                  </slot>
+                </span>
+
+                <span v-if='node.shapeType == "imageShape"'>
+                  <slot name="toggle" :node="node">
+                    <img src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIcon.png">
+                  </slot>
+                </span>
             </slot>
           </template>
 
