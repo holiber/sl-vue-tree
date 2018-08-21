@@ -73,7 +73,7 @@
             </slot>
           </span>
 
-            <span name="title" :node="node">{{ node.title }}</span>
+            <span>{{ node.title }}</span>
           </div>
 
           <div class="sl-vue-tree-sidebar">
