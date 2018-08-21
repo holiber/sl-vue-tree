@@ -72,8 +72,8 @@
                 <img v-if="!node.isLeaf && node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
               </span>
 
-              <img v-if="!node.isLeaf" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
-              <img v-if='node.shapeType == "simpleTextShape"' src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png">
+              <img v-if="!node.isLeaf && node.shapeType" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
+              <!-- <img v-if='node.shapeType' src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/simpleTextIcon.png"> -->
 
             </slot>
             <!-- <slot name="title" :node="node">{{ node.title }}</slot> -->
