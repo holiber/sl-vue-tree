@@ -70,7 +70,7 @@
               <img v-if="!node.isLeaf && !node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowDown.png">
               <img v-if="!node.isLeaf && node.isExpanded" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/arrowRight.png">
 
-              <img class="folder-img" -if="!node.isLeaf" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
+              <img v-if="!node.isLeaf" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/folder.png">
 
             </slot>
             <!-- <slot name="title" :node="node">{{ node.title }}</slot> -->
