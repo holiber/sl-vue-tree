@@ -28,7 +28,9 @@ export default {
         },
         multiselectKey: {
             type: [String, Array],
-            default: ['ctrlKey', 'metaKey'],
+            default: function() {
+                return ['ctrlKey', 'metaKey']
+            },
             validator: function(value) {
                 let allowedKeys = ['ctrlKey', 'metaKey', 'altKey'];
                 let multiselectKeys = Array.isArray(value) ? value : [value];
