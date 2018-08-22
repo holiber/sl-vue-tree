@@ -95,11 +95,9 @@
                 <img v-if="!node.isSelected" src="https://s3-ap-northeast-1.amazonaws.com/labelweb/sl-vue-tree/imageIcon.png">
               </slot>
             </span>
-
-            <!-- <slot name="title" :node="node">{{ node.title }}</slot> -->
           </div>
 
-          <slot name="title" :node="node">{{ node.title }}</slot>
+          <slot name="title" :node="node"><span class="title">{{ node.title }}</span></slot>
 
           <div class="sl-vue-tree-sidebar">
             <slot name="sidebar" :node="node"></slot>
@@ -118,7 +116,7 @@
             @dragover.prevent
         >
           <template slot="title" slot-scope="{ node }">
-            <slot name="title" :node="node">{{ node.title }}</slot>
+            <slot name="title" :node="node"><span class="title">{{ node.title }}</span></slot>
           </template>
 
           <template slot="toggle" slot-scope="{ node }">
