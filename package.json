@@ -27,5 +27,8 @@
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15"
+  },
+  "dependencies": {
+    "clone": "^2.1.2"
   }
 }
