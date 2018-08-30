@@ -239,7 +239,7 @@ export default {
     },
 
     select(path, addToSelection = false, event = null) {
-      const multiselectKeys = Array.isArray(this.multiSelectKey) ?
+      const multiselectKeys = Array.isArray(this.multiselectKey) ?
         this.multiselectKey:
         [this.multiselectKey];
       const multiselectKeyIsPressed = event && !!multiselectKeys.find(key => event[key]);
