@@ -27,7 +27,7 @@ export default {
     },
     multiselectKey: {
       type: [String, Array],
-      default () {
+      default: function () {
         return ['ctrlKey', 'metaKey']
       },
       validator: function (value) {

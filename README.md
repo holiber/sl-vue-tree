@@ -24,7 +24,7 @@ install
 
 <script>
 
-    var nodes = [
+  var nodes = [
     {title: 'Item1', isLeaf: true},
     {title: 'Item2', isLeaf: true, data: { visible: false }},
     {title: 'Folder1'},
