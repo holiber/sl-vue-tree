@@ -135,6 +135,6 @@
   </div>
 </template>
 
-<script src="./sl-vue-tree.js"></script>
+<script src="./sl-vue-tree.ts"></script>
 
 
