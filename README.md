@@ -184,7 +184,7 @@ slVueTree.traverse((node, nodeModel, path) => {
 
 handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
 
-[demo](https://stream-labs.github.io/sl-vue-tree/demo/keyboardcontrol)
+[demo](https://stream-labs.github.io/sl-vue-tree/demo/index)
 
 [Contributing](CONTRIBUTING.md)
 
