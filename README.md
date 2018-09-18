@@ -186,7 +186,8 @@ handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
 
 [demo](https://holiber.github.io/sl-vue-tree/demo/keyboardcontrol)
 
-[Contributing](CONTRIBUTING.md)
+## Contributing
+[see CONTRIBUTING.md](CONTRIBUTING.md)
 
 # Changelog
 v1.7.1
