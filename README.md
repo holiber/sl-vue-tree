@@ -4,7 +4,7 @@ Customizable draggable tree component for Vue.js
 
 ![preview](preview.png)
 
-[demo](https://stream-labs.github.io/sl-vue-tree/demo/index)
+[demo](https://holiber.github.io/sl-vue-tree/demo/index)
 
 install
 
@@ -184,7 +184,7 @@ slVueTree.traverse((node, nodeModel, path) => {
 
 handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
 
-[demo](https://stream-labs.github.io/sl-vue-tree/demo/keyboardcontrol)
+[demo](https://holiber.github.io/sl-vue-tree/demo/keyboardcontrol)
 
 [Contributing](CONTRIBUTING.md)
 
