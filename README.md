@@ -144,12 +144,13 @@ interface ICursorPosition<TDataType> {
 # Slots
 
 
-| slot     | context     | description                                                                                   |
-|----------|-------------|-----------------------------------------------------------------------------------------------|
-| title    | ISlTreeNode | Slot for item title                                                                           |
-| toggle   | ISlTreeNode | Slot for expand/collapse button                                                               |
-| sidebar  | ISlTreeNode | Sidebar content                                                                               |
-| draginfo | SlVueTree   | Slot that follows the mouse cursor while dragging. By default shows the dragging nodes count. |
+| slot       | context     | description                                                                                   |
+|------------|-------------|-----------------------------------------------------------------------------------------------|
+| title      | ISlTreeNode | Slot for item title                                                                           |
+| toggle     | ISlTreeNode | Slot for expand/collapse button                                                               |
+| sidebar    | ISlTreeNode | Sidebar content                                                                               |
+| draginfo   | SlVueTree   | Slot that follows the mouse cursor while dragging. By default shows the dragging nodes count. |
+| node-empty | ISlTreeNode | Slot for (optional) message when folder is open, but empty                                    |
 
 
 ## Example:
