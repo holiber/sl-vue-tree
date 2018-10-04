@@ -71,6 +71,11 @@
           </span>
 
             <slot name="title" :node="node">{{ node.title }}</slot>
+            
+            <slot name="empty-node" :node="node" v-if="!node.isLeaf && node.children.length == 0 && node.isExpanded">
+              <div> empty </div>
+            </slot>
+
           </div>
 
           <div class="sl-vue-tree-sidebar">
