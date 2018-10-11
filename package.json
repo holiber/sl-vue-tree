@@ -6,8 +6,8 @@
   "types": "dist/sl-vue-tree.d.ts",
   "scripts": {
     "clear": "rimraf dist",
-    "build": "clear && webpack-cli --progress --mode production",
-    "start": "clear && webpack-cli --watch --progress --mode development",
+    "build": "npm run clear && webpack-cli --progress --mode production",
+    "start": "npm run clear && webpack-cli --watch --progress --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -26,6 +26,6 @@
     "vue-loader": "^14.2.2",
     "vue-template-compiler": "^2.5.16",
     "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.15"
+    "webpack-cli": "^3.1.2"
   }
 }
