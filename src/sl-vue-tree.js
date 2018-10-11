@@ -335,9 +335,9 @@ export default {
       const scrollTopSpeed = (this.scrollAreaHeight - event.clientY) / this.scrollAreaHeight;
 
       if (scrollDownSpeed > 0) {
-        this.startScroll(scrollDownSpeed);
+        this.startScroll({speed: scrollDownSpeed, xpos: event.clientX, ypos: event.clientY});
       } else if (scrollTopSpeed > 0) {
-        this.startScroll(-scrollTopSpeed)
+        this.startScroll({speed: -scrollTopSpeed, xpos: event.clientX, ypos: event.clientY});
       } else {
         this.stopScroll();
       }
@@ -484,7 +484,7 @@ export default {
     },
 
 
-    startScroll(speed) {
+    startScroll({speed, xpos, ypos }) {
       const $root = this.getRoot().$el;
       if (this.scrollSpeed === speed) {
         return;
@@ -494,7 +494,28 @@ export default {
 
       this.scrollSpeed = speed;
       this.scrollIntervalId = setInterval(() => {
-        scrollBy(0, this.maxScrollSpeed * speed)
+        const increment = this.maxScrollSpeed * speed;
+        scrollBy(0, increment )
+
+        /* when scrolling, elements should behave as if mouseover is being triggered: */
+        const $target = document.elementFromPoint(xpos, ypos+increment);
+        const $nodeItem = $target.getAttribute('path') ? $target : $target.closest('[path]');
+        const root = this.getRoot();
+        const cursorPosition = root.getCursorPositionFromCoords(xpos, ypos+increment);
+        root.setCursorPosition(cursorPosition);
+
+        /* when scrolling, dragInfo should stay attached to the cursor */
+        const $dragInfo = this.$refs.dragInfo;
+        const $root = this.getRoot().$el;
+
+        const rootRect = $root.getBoundingClientRect();
+        const dragInfoTop = (ypos+increment - rootRect.top - ($dragInfo.style.marginBottom | 0) );
+        $dragInfo.style.top = dragInfoTop + 'px';
+
+        /* stop scrolling when we reach the bottom of the sl-vue-tree-root element */
+        const currentPosition = $root.getBoundingClientRect().bottom - $root.getBoundingClientRect().y;
+        if(dragInfoTop > currentPosition ){this.stopScroll()};
+        if(dragInfoTop < 0){ this.stopScroll()};
       }, 20);
     },
 
