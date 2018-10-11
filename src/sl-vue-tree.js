@@ -329,10 +329,10 @@ export default {
 
       this.setCursorPosition({ node: destNode, placement });
 
-      const scrollBottomLine = rootRect.bottom - this.scrollAreaHeight;
-      const scrollDownSpeed = (event.clientY - scrollBottomLine) / (rootRect.bottom - scrollBottomLine);
+      const scrollBottomLine = window.innerHeight - this.scrollAreaHeight
+      const scrollDownSpeed = (event.clientY - scrollBottomLine) / this.scrollAreaHeight
       const scrollTopLine = rootRect.top + this.scrollAreaHeight;
-      const scrollTopSpeed = (scrollTopLine - event.clientY) / (scrollTopLine - rootRect.top);
+      const scrollTopSpeed = (this.scrollAreaHeight - event.clientY) / this.scrollAreaHeight;
 
       if (scrollDownSpeed > 0) {
         this.startScroll(scrollDownSpeed);
@@ -494,7 +494,7 @@ export default {
 
       this.scrollSpeed = speed;
       this.scrollIntervalId = setInterval(() => {
-        $root.scrollTop += this.maxScrollSpeed * speed;
+        scrollBy(0, this.maxScrollSpeed * speed)
       }, 20);
     },
 
