@@ -191,6 +191,11 @@ handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
 [see CONTRIBUTING.md](CONTRIBUTING.md)
 
 # Changelog
+
+v1.8.0
+
+- added `empty-node` slot
+
 v1.7.1
 
 - added `multiselectKey` property

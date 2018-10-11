@@ -4,7 +4,7 @@ PRs are appreciated.
 
 to start watcher run:
 
-`npm start`
+`npm run start`
 
 to build project run:
 
