@@ -50,7 +50,7 @@ install
 
 ````
 
-The `value` property is array of `ISlTreeNodeModel` nodes:
+The `value` property is an array of `ISlTreeNodeModel` nodes:
 
 ````typescript
 interface ISlTreeNodeModel<TDataType> {
@@ -65,16 +65,16 @@ interface ISlTreeNodeModel<TDataType> {
 }
 ````
 
-For convenience the component's events return `ISlTreeNode` objects those actually are `ISlTreeNodeModel`
+For convenience the component's events return `ISlTreeNode` objects. Those actually are `ISlTreeNodeModel`
 with some computed props:
 ````typescript
 interface ISlTreeNode<TDataType> extends ISlTreeNodeModel<TDataType> {
     isFirstChild: boolean;
     isLastChild: boolean;
-    isVisible: boolean;	// node is visible if the all of it's parents are expanded
+    isVisible: boolean;	// node is visible if all of its parents are expanded
     level: number; // nesting level
     ind: number; // index in the array of siblings 
-    path: number[]; // path to node as array of indexes, for exaple [2, 0, 1] in example above is path to `Item4` 
+    path: number[]; // path to node as array of indexes, for example [2, 0, 1] in the example above is path to `Item4` 
     pathStr: string; // serialized path to node
     children: ISlTreeNode<TDataType>[];
 }
@@ -88,9 +88,9 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 
 | prop             | type               | default                | description                                                                                                                                                                                              |
 |------------------|--------------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| value            | ISlTreeNodeModel[] | []                     | An array of nodes to show. Each node represented by `ISlTreeNodeModel` interface                                                                                                                              |
+| value            | ISlTreeNodeModel[] | []                     | An array of nodes to show. Each node is represented by `ISlTreeNodeModel` interface                                                                                                                              |
 | allowMultiselect | Boolean            | true                   | Disable or enable the multiselect feature                                                                                                                                                                |
-| edgeSize         | Number             | 3                      | Offset in pixels from top and bottom for folder-node element. While dragging cursor is in that offset, the dragging node will be placed before or after the folder-node instead to be placed inside the folder. |
+| edgeSize         | Number             | 3                      | Offset in pixels from top and bottom for folder-node element. While dragging cursor is in that offset, the dragging node will be placed before or after the folder-node instead of being placed inside the folder. |
 | scrollAreaHeight | Number             | 70                     | Offset in pixels from top and bottom for the component element. While dragging cursor is in that area, the scrolling starts.                                                                                |
 | maxScrollSpeed   | Number             | 20                     | The scroll speed is relative to the cursor position. Defines the max scroll speed.             
 | multiselectKey   | string|string[]    | ['ctrlKey', 'metaKey'] | The keys for multiselect mode. Allowed values are ['ctrlKey', 'metaKey', 'altKey']   
@@ -100,7 +100,7 @@ You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` proper
 | prop           | type            | description                                                                                                                                                                                                                                                     |
 |----------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | nodes          | ISlTreeNode[]   | List of nodes with some computed props. See `ISlTreeNode` interface.                                                                                                                                                                                            |
-| cursorPosition | ICursorPosition | Represents the current cursor position that describes the action that will be applied to the dragged node while `mouseup` event. See `ICursorPosition` interface |
+| cursorPosition | ICursorPosition | Represents the current cursor position that describes the action that will be applied to the dragged node on `mouseup` event. See `ICursorPosition` interface |
 | selectionSize  | Number          | The count of selected nodes
 | dragSize       | Number          | The count of selected and draggable nodes
 | isDragging     | Boolean         | True if nodes are dragging
@@ -116,7 +116,7 @@ interface ICursorPosition<TDataType> {
 
 | event           | callback arguments                                                         | description                                       |
 |-----------------|----------------------------------------------------------------------------|---------------------------------------------------|
-| input           | nodes: ISlTreeNodeModel[]                                                  | triggers for any changes for `value` property     |
+| input           | nodes: ISlTreeNodeModel[]                                                  | triggers for any changes to `value` property     |
 | select          | selectedNodes: ISlTreeNode[], event: MouseEvent                            | triggers when a node has been selected/deselected |
 | toggle          | toggledNode: ISlTreeNode, event: MouseEvent                                | triggers when a node has been collapsed/expanded  |
 | drop            | draggingNodes: ISlTreeNode[], position: ICursorPosition, event: MouseEvent | triggers when dragging nodes have been dropped    |
@@ -129,11 +129,11 @@ interface ICursorPosition<TDataType> {
 
 | method                                                                                                   | description                                                                                        |
 |----------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| getNode(path: number[]): ISlTreeNode                                                                     | Find the node by using it's path                                                                   |
+| getNode(path: number[]): ISlTreeNode                                                                     | Find the node by using its path                                                                   |
 | traverse(cb: (node: ISlTreeNode, nodeModel: ISlTreeNodeModel, siblings: ISlTreeNodeModel[])  => boolean) | Helpful method to traverse all nodes. The traversing will be stopped if callback returns `false`.  |
-| updateNode(path: number[], patch: Partial<ISlTreeNodeModel>)                                             | Update the node by using it's path                                                                 |
-| select(path: number[], addToSelection = false)                                                           | Select the node by using it's path                                                                 |                                                                                                                                              |
-| getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using it's path                                                        |
+| updateNode(path: number[], patch: Partial<ISlTreeNodeModel>)                                             | Update the node by using its path                                                                 |
+| select(path: number[], addToSelection = false)                                                           | Select the node by using its path                                                                 |                                                                                                                                              |
+| getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using its path                                                        |
 | getSelected(): ISlTreeNode[]                                                                             | Get selected nodes                                                                                 |
 | remove(paths: number[][])                                                                                | Remove nodes by paths. For example `.remove([[0,1], [0,2]])`
 | getFirstNode(): ISlTreeNode                                                                              | Get the first node in the tree                                                                     |
