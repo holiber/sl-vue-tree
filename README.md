@@ -152,10 +152,16 @@ interface ICursorPosition<TDataType> {
 | draginfo   | SlVueTree   | Slot that follows the mouse cursor while dragging. By default shows the dragging nodes count. |
 | empty-node | ISlTreeNode | Slot for (optional) message when folder is open, but empty                                    |
 
+# IE 11 support
 
-## Example:
+You must add a [babel-polifyl](https://babeljs.io/docs/en/babel-polyfill) for correct work in IE11  
+[See IE11 example]([demo](https://holiber.github.io/sl-vue-tree/demo/ie11test.html)) 
 
-add a folder or item icon via `title` slot
+
+# Examples
+
+
+## Add a folder or item icon via `title` slot
 ````html
 <sl-vue-tree v-model="nodes">
     <template slot="title" slot-scope="{ node }">
@@ -172,8 +178,7 @@ add a folder or item icon via `title` slot
 
 ````
 
-## Example:
-select all nodes
+## Select all nodes
 
 ```javascript
 slVueTree.traverse((node, nodeModel, path) => {
@@ -181,9 +186,7 @@ slVueTree.traverse((node, nodeModel, path) => {
 })
 ```
 
-## Example:
-
-handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
+## Handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
 
 [demo](https://holiber.github.io/sl-vue-tree/demo/keyboardcontrol)
 
