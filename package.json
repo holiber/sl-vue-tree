@@ -2,6 +2,7 @@
   "name": "sl-vue-tree",
   "version": "1.8.0",
   "description": "draggable tree vue component",
+  "browserslist": "> 0.25%, not dead",
   "main": "dist/sl-vue-tree.js",
   "types": "dist/sl-vue-tree.d.ts",
   "scripts": {
@@ -19,6 +20,9 @@
   "author": "Holiber",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
     "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "rimraf": "^2.6.2",

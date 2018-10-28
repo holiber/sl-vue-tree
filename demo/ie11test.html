@@ -5,6 +5,7 @@
   <title>sl-vue-tree</title>
   <link rel="stylesheet" href="../dist/sl-vue-tree-dark.css">
   <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+  <script src="./polyfill.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
   <script src="../dist/sl-vue-tree.js"></script>
 </head>
@@ -13,7 +14,7 @@
 <div id="app"
 >
 
-  <h2> Sl-vue-tree - drag external elements</h2>
+  <h2> Sl-vue-tree - IE11-friendly code</h2>
 
 
   <div class="row">
@@ -21,44 +22,8 @@
       <sl-vue-tree
           v-model="nodes"
           ref="slVueTree"
-          @externaldrop="onExternalDropHandler"
       >
-
-        <template slot="title" slot-scope="{ node }">
-          <span class="item-icon">
-            <i class="fa fa-file" v-if="node.isLeaf"></i>
-            <i class="fa fa-folder" v-if="!node.isLeaf"></i>
-          </span>
-
-          {{ node.title }}
-        </template>
-
-
-        <template slot="toggle" slot-scope="{ node }">
-          <span v-if="!node.isLeaf">
-            <i v-if="node.isExpanded" class="fa fa-chevron-down"></i>
-            <i v-if="!node.isExpanded" class="fa fa-chevron-right"></i>
-          </span>
-        </template>
-
-
       </sl-vue-tree>
-
-      <div class="dragme" draggable="true">
-        <i class="fa fa-file"></i> <br/><br/>
-        Drag Me!
-      </div>
-
-      <div class="dragme" draggable="true">
-        <i class="fa fa-file"></i> <br/><br/>
-        Drag Me!
-      </div>
-
-      <div class="dragme" draggable="true">
-        <i class="fa fa-file"></i> <br/><br/>
-        Drag Me!
-      </div>
-
     </div>
 
 
@@ -67,7 +32,6 @@
     </div>
 
   </div>
-
 
 
 </div>
@@ -93,28 +57,14 @@
 
   new Vue({
     el: '#app',
-    components: { SlVueTree },
+    components: { SlVueTree: SlVueTree },
     data: function () {
      return {
        nodes: nodes
      }
     },
 
-    mounted() {
-      // expose instance to the global namespace for better debugging
-      window.slVueTree = this.$refs.slVueTree;
 
-    },
-
-
-
-    methods: {
-
-      onExternalDropHandler(cursorPosition, event) {
-        console.log('external drop', cursorPosition);
-      }
-
-    }
   })
 </script>
 
@@ -159,16 +109,6 @@
     display: inline-block;
     text-align: left;
     width: 20px;
-  }
-
-  .dragme {
-    text-align: center;
-    display: inline-block;
-    padding: 10px;
-  }
-
-  .dragme .fa {
-    font-size: 80px;
   }
 
 
