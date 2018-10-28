@@ -1,6 +1,6 @@
 {
   "name": "sl-vue-tree",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "draggable tree vue component",
   "browserslist": "> 0.25%, not dead",
   "main": "dist/sl-vue-tree.js",
