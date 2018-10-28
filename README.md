@@ -195,6 +195,9 @@ slVueTree.traverse((node, nodeModel, path) => {
 
 # Changelog
 
+v1.8.1
+- added IE11 support https://github.com/holiber/sl-vue-tree/issues/17
+
 v1.8.0
 
 - added `empty-node` slot
