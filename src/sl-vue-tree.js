@@ -203,6 +203,10 @@ export default {
       this.getRoot().$emit('select', selectedNodes, event);
     },
 
+    emitBeforeDrop(draggingNodes, position, cancel) {
+      this.getRoot().$emit('beforedrop', draggingNodes, position, cancel);
+    },
+
     emitDrop(draggingNodes, position, event) {
       this.getRoot().$emit('drop', draggingNodes, position, event);
     },
@@ -550,20 +554,35 @@ export default {
         if (this.checkNodeIsParent(draggingNode, this.cursorPosition.node)) {
           this.stopDrag();
           return;
-        };
+        }
       }
 
       const newNodes = this.copy(this.currentValue);
-      const nodeModelsToInsert = [];
+      const nodeModelsSubjectToInsert = [];
 
-      // find and mark dragging model to delete
+      // find dragging model to delete
       for (let draggingNode of draggingNodes) {
         const sourceSiblings = this.getNodeSiblings(newNodes, draggingNode.path);
         const draggingNodeModel = sourceSiblings[draggingNode.ind];
-        nodeModelsToInsert.push(this.copy(draggingNodeModel));
-        draggingNodeModel['_markToDelete'] = true;
+        nodeModelsSubjectToInsert.push(draggingNodeModel);
       }
 
+      // allow the drop to be cancelled
+      let cancelled = false;
+      this.emitBeforeDrop(draggingNodes, this.cursorPosition, () => cancelled = true);
+
+      if (cancelled) {
+          this.stopDrag();
+          return;
+      }
+
+      const nodeModelsToInsert = [];
+
+      // mark dragging model to delete
+      for (let draggingNodeModel of nodeModelsSubjectToInsert) {
+          nodeModelsToInsert.push(this.copy(draggingNodeModel));
+          draggingNodeModel['_markToDelete'] = true;
+      }
 
       // insert dragging nodes to the new place
       const destNode = this.cursorPosition.node;
