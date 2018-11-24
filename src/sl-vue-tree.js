@@ -25,6 +25,10 @@ export default {
       type: Boolean,
       default: true
     },
+    allowToggleBranch: {
+      type: Boolean,
+      default: true
+    },
     multiselectKey: {
       type: [String, Array],
       default: function () {
@@ -617,6 +621,8 @@ export default {
 
 
     onToggleHandler(event, node) {
+      if (!this.allowToggleBranch) return;
+
       this.updateNode(node.path, { isExpanded: !node.isExpanded });
       this.emitToggle(node, event);
       event.stopPropagation();

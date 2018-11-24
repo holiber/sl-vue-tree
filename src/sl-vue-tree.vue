@@ -89,6 +89,7 @@
             :level="node.level"
             :parentInd="nodeInd"
             :allowMultiselect="allowMultiselect"
+            :allowToggleBranch="allowToggleBranch"
             :edgeSize="edgeSize"
             :showBranches="showBranches"
             @dragover.prevent

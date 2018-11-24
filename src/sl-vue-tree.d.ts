@@ -34,6 +34,7 @@ export default class SlVueTree<TDataType> extends Vue {
     showBranches: boolean;
     level: number;
     parentInd: number;
+    allowToggleBranch: boolean;
     private rootCursorPosition;
     private rootDraggingNode;
     cursorPosition: ICursorPosition<TDataType>;
