@@ -4,7 +4,9 @@ export default {
   props: {
     value: {
       type: Array,
-      default: () => []
+      default: function () {
+        return []
+      }
     },
     edgeSize: {
       type: Number,
