@@ -195,6 +195,8 @@ slVueTree.traverse((node, nodeModel, path) => {
 [see CONTRIBUTING.md](CONTRIBUTING.md)
 
 # Changelog
+v1.8.3
+- Allow to disable or enable the expand/collapse button https://github.com/holiber/sl-vue-tree/pull/33
 
 v1.8.1
 - added IE11 support https://github.com/holiber/sl-vue-tree/issues/17
