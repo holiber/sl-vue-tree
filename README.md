@@ -154,7 +154,7 @@ interface ICursorPosition<TDataType> {
 
 # IE 11 support
 
-You must add a [babel-polifyl](https://babeljs.io/docs/en/babel-polyfill) for correct work in IE11  
+You must add a [babel-polyfill](https://babeljs.io/docs/en/babel-polyfill) for it to work correctly in IE11  
 [See IE11 example](https://holiber.github.io/sl-vue-tree/demo/ie11test.html)
 
 
@@ -186,7 +186,7 @@ slVueTree.traverse((node, nodeModel, path) => {
 })
 ```
 
-## Handle keydow and keyup events via `getNextNode` and `getPrevNode` methods
+## Handle keydown and keyup events via `getNextNode` and `getPrevNode` methods
 
 [demo](https://holiber.github.io/sl-vue-tree/demo/keyboardcontrol)
 
