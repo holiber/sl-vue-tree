@@ -59,6 +59,11 @@
           </span>
         </template>
 
+
+        <template slot="draginfo">
+          {{selectedNodesTitle}}
+        </template>
+
       </sl-vue-tree>
     </div>
 
@@ -114,7 +119,8 @@
      return {
        nodes: nodes,
        contextMenuIsVisible: false,
-       lastEvent: 'No last event'
+       lastEvent: 'No last event',
+       selectedNodesTitle: '',
      }
     },
 
@@ -134,7 +140,8 @@
       },
 
       nodeSelected(nodes, event) {
-        this.lastEvent = `Select nodes: ${nodes.map(node => node.title).join(', ')}`;
+        this.selectedNodesTitle = nodes.map(node => node.title).join(', ');
+        this.lastEvent = `Select nodes: ${this.selectedNodesTitle}`;
       },
 
       nodeToggled(node, event) {
