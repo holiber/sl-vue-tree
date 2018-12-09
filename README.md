@@ -180,13 +180,13 @@ You must add a [babel-polyfill](https://babeljs.io/docs/en/babel-polyfill) for i
 # Examples
 
 
-## Customising display using `slot`
+## Customising tree display using the `slot` attribute
 
-If you don't put anything between the opening and closing `sl-vue-tree` tags, the SlVueTree will display the tree in its default format. To customise this, simply provide a template for how to display each aspect of the nodes of the tree. The aspects are listed in the `Slots` table above. For example, if you want to add folder and item icons, the best way is to intercept the place where the `title` would normally be displayed, and modify that to display first the icon and then the name. 
+If you don't put anything between the opening and closing `sl-vue-tree` tags, SlVueTree will display the tree in its default format. To customise this, simply provide a template for how to display each aspect of the nodes of the tree. The aspects are listed in the `Slots` table above. For example, if you want to add folder and item icons, the best way is to intercept the place where the `title` would normally be displayed, and modify that to display first the icon and then the name. 
 
-To do this, create an inner `template` element. Because it will take the place of the default display of the title, set its `slot` attribute to be `"title"`. You want your customized title display to use the individualised text of the title (so that it can embellish it) so you need to receive a copy of the node in the template. Do that by setting the `slot-scope` attribute to `{ node }`. Then within the template element, you can access any property or computed property of the node. 
+To do this, create an inner `template` element. Because it will take the place of the default display of the title, set its `slot` attribute to be `"title"`. You want your customized title display to have access to the individualised text of the node's title (so that it can embelish it) so you need to receive a copy of the node in the template. Do that by setting the `slot-scope` attribute to `{ node }`. Then within the template element, you can access any property or computed property of the node. 
 
-In the example below, we are reading the `.isLeaf` property of the node, which tells us whether the node is a leaf (like a file in a disk, i.e. has no children) or a non-leaf (like a folder in a disk, i.e. is the place files are kept). Depending on whether the node is a leaf or not, we display either the file or folder icon. 
+In the example below, we are reading the `.isLeaf` property of the node, which tells us whether the node is a leaf (like a file in a disk, i.e. has no children) or a non-leaf (like a folder in a disk, i.e. is the place files are kept). We use v-if so that depending on whether the node is a leaf or not, we display either the file or folder icon, in this case from Font Awesome.
 
 Then we read the `.title` property of the node so we can display it.
 
@@ -214,14 +214,14 @@ Suppose you have defined a tree as follows:
  <sl-vue-tree v-model="nodes" ref="myExampleSlVueTree">
  </sl-vue-tree>
 
-And then you want to change the title of the second node at the root level of the tree. Indexing is zero-based, so the index of the node is 1.
+And suppose you want to change the title of the second node at the root level of the tree. Indexing is zero-based, so the index of the node is 1.
 
 
 ```javascript
 this.$refs.myExampleSlVueTree.updateNode([1],{title,'Much More Impressive Title'})
 ```
 
-Using the SlVueTreeObject `this.$refs.myExampleSlVueTree` guarantees it will all be done correctly and the component will update on screen. However you can manipulate the tree directly in Javascript, as long as you remember to use `Vue.set` rather than poking things directly into the tree yourself. Vue.set ensures the display will be updated. Here is an example showing how to traverse a tree, marking every node as selected.
+Using the SlVueTreeObject `this.$refs.myExampleSlVueTree` guarantees it will all be done correctly and the component will update on screen. However you can manipulate the tree directly in Javascript, as long as you remember to use `Vue.set` rather than poking things directly into the tree yourself. `Vue.set` works behind the scenes to ensure the display will be updated. Here is an example showing how to traverse a tree, marking every node as selected.
 
 The `traverse` method takes a function as a parameter and calls-back this function for each node in the tree. 
 
@@ -233,7 +233,7 @@ this.$refs.myExampleSlVueTree.traverse((node, nodeModel, path) => {
 
 ## Responding to user interactions with the tree component
 
-If, for example, you want to respond to a right-click or long-press, by doing something special, you can specify a handler (and use event.preventDefault to prevent the system default action from taking place).
+If, for example, you want to respond to a right-click or long-press, by doing something special, you can specify a handler (and use `event.preventDefault` to prevent the system default action from taking place).
 
  ````html
 <sl-vue-tree v-model="nodes" ref="myExampleSlVueTree" @nodecontextmenu="myFancyFunctionForHandling">
