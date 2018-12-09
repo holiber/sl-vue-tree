@@ -25,7 +25,7 @@ In your HTML, insert an `sl-vue-tree` element.
                  (a) the expand/collapse marker, 
                  (b) the title of the node, 
                  (c) any additional sidebar text for that node
-		 (d) any other data you wish to store "inside" the node, in the node.data.xxxxxxx properties	
+		 (d) any other data you wish to store within the node, in the node.data property	
          -->
   </sl-vue-tree>
 </div>
@@ -35,15 +35,21 @@ In your HTML, insert an `sl-vue-tree` element.
 
 <script>
 
-  // Each tree you want to display needs a Javascript array, containing its nodes (here called "nodes") 
-  // and a corresponding SlVueTree object (here called "this.$refs.myExampleSlVueTree"). 
-  // After you create the tree, do all subsequent manipulations of the tree via the SlVueTree object's methods.
-  // For example, to update the second node's third child node, to insert a "prizeWinner" property 
-  // into the "data" property where you can store anything you like, use:
-  //	 this.$refs.myExampleSlVueTree.updateNode([1,2],{data:{prizeWinner:true}})
+  // Each tree you want to display needs a Javascript array, containing its nodes (here in the variable "nodes") 
+  // and a corresponding SlVueTree object (here called "myExampleSlVueTree", which you can access in 
+  // the `methods` as `this.$refs.myExampleSlVueTree`). 
+  // You can manipulate the tree by manipulating `nodes` in Javascript, or (if you prefer to reference the target node
+  // by its path, such as `[2,3,10]` for the 11th child of the 4th child of the 3rd item in the root of the tree),
+  // you can use the `updateNode` method. 
+  // For example, to to set a "prizeWinner" property 
+  //	 this.$refs.myExampleSlVueTree.updateNode([2,3,10],{data:{prizeWinner:true}})
  
 var nodes = [ 
-	// "nodes" is the tree. It consists of multiple individual nodes. The recommended bare minimum for each node within a tree is the "title" and whether the node "isLeaf" (i.e. has no children), and of course if there are children then include the "children" property too, which is a tree itself (and so on, to whatever depth you need.) 
+	// "nodes" is the tree. It consists of multiple individual nodes. 
+	// The recommended bare minimum for each node within a tree is the "title" and whether the 
+	// node is a leaf ("isLeaf", i.e. has no children). If there are children then include the "children" property too, 
+	// which is a tree itself (and so on, to whatever depth you need.) 
+	
     {title: 'Item1', isLeaf: true},
     {title: 'Item2', isLeaf: true, data: { visible: false }},
     {title: 'Folder1'},
@@ -240,7 +246,7 @@ If, for example, you want to respond to a right-click or long-press, by doing so
  </sl-vue-tree>
 ```` 
  
-```javascript
+````javascript
 methods: {
 
 	myFancyFunctionForHandling:function(nodes,event){
@@ -250,7 +256,7 @@ methods: {
 		event.preventDefault() // This stops the browser's default handling i.e. showing the right-click menu  
 	}
 }
-```
+````
  
 
 ## Handle keydown and keyup events via `getNextNode` and `getPrevNode` methods
