@@ -13,10 +13,21 @@ install
 
 	
 # Quick start
+
+In your HTML, insert an `sl-vue-tree` element.
+
 ````html
 
 <div id="app">
-  <sl-vue-tree v-model="nodes"/>
+  <sl-vue-tree v-model="nodes" ref="myExampleSlVueTree">
+	<!-- inside here, add TEMPLATE tags if you want to specify how sl-vue-tree 
+             should display: 
+                 (a) the expand/collapse marker, 
+                 (b) the title of the node, 
+                 (c) any additional sidebar text for that node
+		 (d) any other data you wish to store "inside" the node, in the node.data.xxxxxxx properties	
+         -->
+  </sl-vue-tree>
 </div>
 
 <link rel="stylesheet" href="dist/sl-vue-tree-dark.css">
@@ -24,7 +35,15 @@ install
 
 <script>
 
-  var nodes = [
+  // Each tree you want to display needs a Javascript array, containing its nodes (here called "nodes") 
+  // and a corresponding SlVueTree object (here called "this.$refs.myExampleSlVueTree"). 
+  // After you create the tree, do all subsequent manipulations of the tree via the SlVueTree object's methods.
+  // For example, to update the second node's third child node, to insert a "prizeWinner" property 
+  // into the "data" property where you can store anything you like, use:
+  //	 this.$refs.myExampleSlVueTree.updateNode([1,2],{data:{prizeWinner:true}})
+ 
+var nodes = [ 
+	// "nodes" is the tree. It consists of multiple individual nodes. The recommended bare minimum for each node within a tree is the "title" and whether the node "isLeaf" (i.e. has no children), and of course if there are children then include the "children" property too, which is a tree itself (and so on, to whatever depth you need.) 
     {title: 'Item1', isLeaf: true},
     {title: 'Item2', isLeaf: true, data: { visible: false }},
     {title: 'Folder1'},
@@ -161,30 +180,78 @@ You must add a [babel-polyfill](https://babeljs.io/docs/en/babel-polyfill) for i
 # Examples
 
 
-## Add a folder or item icon via `title` slot
+## Customising display using `slot`
+
+If you don't put anything between the `sl-vue-tree` opening and closing tags, the component will display the tree in its default manner. To customise this, simply provide a template for each part of the component, listed in the `Slots` table above. For example, if you want to add folder and item icons, the best way is to intercept the place where the `title` would normally be displayed, and modify that to display first the icon and then the name. 
+
+To do this, create an inner `template` element. Because it will take the place of the default display of the title, set its `slot` attribute to be `"title"`. You want your customized title display to use the individualised text of the title (so that it can embellish it) so you need to receive a copy of the node in the template. Do that by setting the `slot-scope` attribute to `{ node }`. Then within the template element, you can access any property or computed property of the node. 
+
+In the example below, we are reading the `.isLeaf` property of the node, which tells us whether the node is a leaf (like a file in a disk, i.e. has no children) or a non-leaf (like a folder in a disk, i.e. is the place files are kept). Depending on whether the node is a leaf or not, we display either the file or folder icon. 
+
+Then we read the `.title` property of the node so we can display it.
+
 ````html
 <sl-vue-tree v-model="nodes">
-    <template slot="title" slot-scope="{ node }">
 
+   <template slot="title" slot-scope="{ node }">
       <span class="item-icon">
         <i class="fa fa-file" v-if="node.isLeaf"></i>
         <i class="fa fa-folder" v-if="!node.isLeaf"></i>
       </span>
-    
       {{ node.title }}
-      
     </template>
+
 </sl-vue-tree>
 
 ````
 
-## Select all nodes
+You may also wish to customise the `toggle` slot, which defaults to being a "plus" or "minus" sign, indicating at each non-leaf node whether you can expand or collapse the subtree that begins at that node.
+
+## Programmatically manipulating the tree
+
+Suppose you have defined a tree as follows:
+
+ <sl-vue-tree v-model="nodes" ref="myExampleSlVueTree">
+ </sl-vue-tree>
+
+And then you want to change the title of the second node at the root level of the tree. Indexing is zero-based, so the index of the node is 1.
+
 
 ```javascript
-slVueTree.traverse((node, nodeModel, path) => {
+this.$refs.myExampleSlVueTree.updateNode([1],{title,'Much More Impressive Title'})
+```
+
+Using the SlVueTreeObject `this.$refs.myExampleSlVueTree` guarantees it will all be done correctly and the component will update on screen. However you can manipulate the tree directly in Javascript, as long as you remember to use `Vue.set` rather than poking things directly into the tree yourself. Vue.set ensures the display will be updated. Here is an example showing how to traverse a tree, marking every node as selected.
+
+The `traverse` method takes a function as a parameter and calls-back this function for each node in the tree. 
+
+```javascript
+this.$refs.myExampleSlVueTree.traverse((node, nodeModel, path) => {
     Vue.set(nodeModel, 'isSelected', true);
 })
 ```
+
+## Responding to user interactions with the tree component
+
+If, for example, you want to respond to a right-click or long-press, by doing something special, you can specify a handler (and use event.preventDefault to prevent the system default action from taking place).
+
+ ````html
+<sl-vue-tree v-model="nodes" ref="myExampleSlVueTree" @nodecontextmenu="myFancyFunctionForHandling">
+ </sl-vue-tree>
+```` 
+ 
+```javascript
+methods: {
+
+	myFancyFunctionForHandling:function(nodes,event){
+		console.log("Event:", event)
+		console.log("Nodes:", nodes)
+		console.log("Now do various clever stuff ...")
+		event.preventDefault() // This stops the browser's default handling i.e. showing the right-click menu  
+	}
+}
+```
+ 
 
 ## Handle keydown and keyup events via `getNextNode` and `getPrevNode` methods
 
