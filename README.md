@@ -182,7 +182,7 @@ You must add a [babel-polyfill](https://babeljs.io/docs/en/babel-polyfill) for i
 
 ## Customising display using `slot`
 
-If you don't put anything between the `sl-vue-tree` opening and closing tags, the component will display the tree in its default manner. To customise this, simply provide a template for each part of the component, listed in the `Slots` table above. For example, if you want to add folder and item icons, the best way is to intercept the place where the `title` would normally be displayed, and modify that to display first the icon and then the name. 
+If you don't put anything between the opening and closing `sl-vue-tree` tags, the SlVueTree will display the tree in its default format. To customise this, simply provide a template for how to display each aspect of the nodes of the tree. The aspects are listed in the `Slots` table above. For example, if you want to add folder and item icons, the best way is to intercept the place where the `title` would normally be displayed, and modify that to display first the icon and then the name. 
 
 To do this, create an inner `template` element. Because it will take the place of the default display of the title, set its `slot` attribute to be `"title"`. You want your customized title display to use the individualised text of the title (so that it can embellish it) so you need to receive a copy of the node in the template. Do that by setting the `slot-scope` attribute to `{ node }`. Then within the template element, you can access any property or computed property of the node. 
 
