@@ -136,6 +136,7 @@ interface ICursorPosition<TDataType> {
 | select(path: number[], addToSelection = false)                                                           | Select the node by using its path                                                                 |                                                                                                                                              |
 | getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using its path                                                        |
 | getSelected(): ISlTreeNode[]                                                                             | Get selected nodes                                                                                 |
+| insert(position: ICursorPosition, nodeModel: ISlTreeNodeModel)                                           | Insert nodes by the current cursor position.                                                       |
 | remove(paths: number[][])                                                                                | Remove nodes by paths. For example `.remove([[0,1], [0,2]])`
 | getFirstNode(): ISlTreeNode                                                                              | Get the first node in the tree                                                                     |
 | getLastNode(): ISlTreeNode                                                                               | Get the last node in the tree
