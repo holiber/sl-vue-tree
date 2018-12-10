@@ -111,6 +111,7 @@
     methods: {
 
       onExternalDropHandler(cursorPosition, event) {
+        this.$refs.slVueTree.insert(cursorPosition, {title: "Dragged Item", isLeaf: true});
         console.log('external drop', cursorPosition);
       }
 
