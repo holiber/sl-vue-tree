@@ -1,6 +1,6 @@
 import { ISvtNodeModel, SvtTree } from "./tree";
 import Vue from 'vue';
-import { CombinedVueInstance, ExtendedVue } from "vue/types/vue";
+import { CombinedVueInstance, ExtendedVue } from 'vue/types/vue';
 
 
 
@@ -27,10 +27,25 @@ interface ISvtTreeProps {
 type TSvtTreeComponent = CombinedVueInstance<Vue, ISvtTreeData, ISvtTreeMethods, ISvtTreeComputed, ISvtTreeProps>;
 
 
-
+// update node
+// toggle expand
 
 
 export default Vue.extend<ISvtTreeData, ISvtTreeMethods, ISvtTreeComputed, ISvtTreeProps>({
+
+  name: 'sl-vue-tree',
+
+  props: {
+    value: {
+      type: Array,
+      default: () => []
+    },
+    path: {
+      type: Array,
+      default: () => []
+    }
+  },
+
   data() {
     const path = this.path || [];
     return {
@@ -65,13 +80,21 @@ export default Vue.extend<ISvtTreeData, ISvtTreeMethods, ISvtTreeComputed, ISvtT
     },
 
     tree(): SvtTree<any> {
-      return this.parent.svtTree;
+      return this.root.svtTree;
     },
 
     nodes() {
-      return this.tree
+      return this.tree.getNodes(this.path);
     }
 
+  },
+
+  methods: {
+    onToggleHandler(event, node) {
+      this.updateNode(node.path, { isExpanded: !node.isExpanded });
+      this.emitToggle(node, event);
+      event.stopPropagation();
+    },
   }
 })
 

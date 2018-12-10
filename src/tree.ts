@@ -18,6 +18,7 @@ export interface ISvtCrusor<TDataType>  {
 
 export class SvtNode<TDataType> implements ISvtNodeModel<TDataType> {
 
+  // Model props
   title: string;
   isLeaf?: boolean;
   isExpanded?: boolean;
@@ -25,7 +26,9 @@ export class SvtNode<TDataType> implements ISvtNodeModel<TDataType> {
   isDraggable?: boolean;
   isSelectable?: boolean;
   data?: TDataType;
+  children: SvtNode<TDataType>[] = [];
 
+  // Generated props
   tree: SvtTree<TDataType>;
   parent: SvtNode<TDataType>;
   isVisible?: boolean;
@@ -35,7 +38,8 @@ export class SvtNode<TDataType> implements ISvtNodeModel<TDataType> {
   level: number;
   path: number[];
   pathStr: string;
-  children: SvtNode<TDataType>[];
+  isOutdated: boolean;
+
 
   constructor(tree: SvtTree<TDataType>, nodeModel: ISvtNodeModel<TDataType>,  ind?: number, parent?: SvtNode<TDataType>) {
 
@@ -48,7 +52,7 @@ export class SvtNode<TDataType> implements ISvtNodeModel<TDataType> {
     const isSelectable = nodeModel.isSelectable == void 0 ? true : !!nodeModel.isSelectable;
     const isLeaf = nodeModel.isLeaf == void 0 ? false : !!nodeModel.isLeaf;
 
-    const isVisible = isExpanded && this.parent.isVisible;
+    const isVisible = !this.parent || (isExpanded && this.parent.isVisible);
     const isFirstChild = this.ind == 0;
     const isLastChild = this.parent ? ind === this.parent.children.length - 1: this.tree.nodes.length - 1;
     const level = this.parent ? this.parent.level + 1 : 0;
@@ -69,7 +73,8 @@ export class SvtNode<TDataType> implements ISvtNodeModel<TDataType> {
       isLastChild,
       level,
       path,
-      pathStr
+      pathStr,
+      isOutdated: false
     });
 
 
@@ -79,6 +84,28 @@ export class SvtNode<TDataType> implements ISvtNodeModel<TDataType> {
     }
   }
 
+
+
+  getModel(): ISvtNodeModel<TDataType> {
+    return {
+      title: this.title,
+      isLeaf: this.isLeaf,
+      isExpanded: this.isExpanded,
+      isSelected: this.isSelected,
+      isDraggable: this.isDraggable,
+      isSelectable: this.isSelectable,
+      data: this.data,
+      children: this.getChildrenModels()
+    }
+  }
+
+  getChildrenModels(): ISvtNodeModel<TDataType>[] {
+    return this.children.map(child => child.getModel());
+  }
+
+  update(patch: Partial<ISvtNodeModel<TDataType>>) {
+
+  }
 
 }
 
@@ -100,17 +127,23 @@ export class SvtTree<TDataType> {
     this.nodes = nodeModels.map((nodeModel, ind) => new SvtNode(this, nodeModel, ind));
   }
 
-  getNodes(path: number[]): SvtNode[] {
-
+  getNodes(path: number[]): SvtNode<TDataType>[] {
+    if (!path || !path.length) return this.nodes;
+    const node = this.getNode(path);
+    if (!node) return [];
+    return node.children;
   }
 
-  getNode(path) {
+  getNode(path): SvtNode<TDataType> {
     let nodes = this.nodes;
-    let node: SvtNode<TDataType> = null;
+    let node: SvtNode<TDataType>;
     for (let nodeInd of path) {
+      if (!nodes) return null;
       node = nodes[nodeInd];
-      nodes = this.nodes[]
+      if (!node) return null;
+      nodes = node.children;
     }
+    return node;
   }
 
 }

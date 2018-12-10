@@ -17,7 +17,7 @@ module.exports = {
 
 
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.ts'],
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
   },
 
@@ -43,6 +43,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
       },
+      { test: /\.tsx?$/, loader: 'ts-loader' },
       {
         test: /\.(png|jpe?g|gif|svg|mp4|ico|wav)(\?.*)?$/,
         loader: 'file-loader',
