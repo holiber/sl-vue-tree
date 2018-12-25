@@ -46,8 +46,7 @@ In your HTML, insert an `sl-vue-tree` element.
  
 var nodes = [ 
 	// "nodes" is the tree. It consists of multiple individual nodes. 
-	// The recommended bare minimum for each node within a tree is the "title" and whether the 
-	// node is a leaf ("isLeaf", i.e. has no children). If there are children then include the "children" property too, 
+	// If there are children then include the "children" property too, 
 	// which is a tree itself (and so on, to whatever depth you need.) 
 	
     {title: 'Item1', isLeaf: true},
@@ -227,7 +226,7 @@ And suppose you want to change the title of the second node at the root level of
 this.$refs.myExampleSlVueTree.updateNode([1],{title,'Much More Impressive Title'})
 ```
 
-Using the SlVueTreeObject `this.$refs.myExampleSlVueTree` guarantees it will all be done correctly and the component will update on screen. However you can manipulate the tree directly in Javascript, as long as you remember to use `Vue.set` rather than poking things directly into the tree yourself. `Vue.set` works behind the scenes to ensure the display will be updated. Here is an example showing how to traverse a tree, marking every node as selected.
+Using the SlVueTreeObject `this.$refs.myExampleSlVueTree` guarantees it will all be done correctly and the component will update on screen. If you manipulate the tree directly in Javascript, it is advisable to use `Vue.set`, which works behind the scenes to ensure the display gets updated. Here is an example showing how to traverse a tree, marking every node as selected.
 
 The `traverse` method takes a function as a parameter and calls-back this function for each node in the tree. 
 
