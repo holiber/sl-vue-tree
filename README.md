@@ -232,7 +232,7 @@ Using the SlVueTreeObject `this.$refs.myExampleSlVueTree` guarantees it will all
 The `traverse` method takes a function as a parameter and calls-back this function for each node in the tree. 
 
 ```javascript
-this.$refs.myExampleSlVueTree.traverse((node, nodeModel, path) => {
+this.$refs.myExampleSlVueTree.traverse((node, nodeModel, siblings) => {
     Vue.set(nodeModel, 'isSelected', true);
 })
 ```
