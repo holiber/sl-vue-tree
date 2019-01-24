@@ -83,8 +83,8 @@
 <script>
 
   var nodes = [
-    {title: 'Item1', isLeaf: true},
-    {title: 'Item2', isLeaf: true, data: { visible: false }},
+    {title: 'Item1', isLeaf: true, data: { id: 1}},
+    {title: 'Item2', isLeaf: true, data: { visible: false, id: 2 }},
     {title: 'Folder1'},
     {
       title: 'Folder2', isExpanded: true, children: [
@@ -135,7 +135,7 @@
         const slVueTree = this.$refs.slVueTree;
         event.stopPropagation();
         const visible = !node.data || node.data.visible !== false;
-        slVueTree.updateNode(node.path, {data: { visible: !visible}});
+        slVueTree.updateNode(node.path, { data: { visible: !visible, id: node.data.id }});
         this.lastEvent = `Node ${node.title} is ${ visible ? 'visible' : 'invisible'} now`;
       },
 
