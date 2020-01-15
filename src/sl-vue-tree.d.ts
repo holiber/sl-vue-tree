@@ -51,5 +51,5 @@ export default class SlVueTree<TDataType> extends Vue {
     getNodeEl(path: number[]): HTMLElement;
     select(path: number[], addToSelection?: boolean): ISlTreeNode<TDataType>;
     insert(cursorPosition : ICursorPosition<TDataType>, nodeModel : ISlTreeNodeModel<TDataType>) : void;
-    remove(paths: number[][]);
+    remove(paths: number[][]) : void;
 }
