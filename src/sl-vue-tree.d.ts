@@ -45,9 +45,11 @@ export default class SlVueTree<TDataType> extends Vue {
     getLastNode(): ISlTreeNode<TDataType>;
     getNextNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>;
     getPrevNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>;
-    updateNode(nodeToUpdate: ISlTreeNode<TDataType>, patch: Partial<ISlTreeNodeModel<TDataType>>): void;
+    updateNode(path: number[], patch: Partial<ISlTreeNodeModel<TDataType>>): void;
     getSelected(): ISlTreeNode<TDataType>[];
     traverse(cb: (node: ISlTreeNode<TDataType>, nodeModel: ISlTreeNodeModel<TDataType>, siblings: ISlTreeNodeModel<TDataType>[]) => boolean | void, nodeModels?: ISlTreeNodeModel<TDataType>[], parentPath?: number[]): ISlTreeNode<TDataType>[] | boolean;
     getNodeEl(path: number[]): HTMLElement;
     select(path: number[], addToSelection?: boolean): ISlTreeNode<TDataType>;
+    insert(cursorPosition: ICursorPosition<TDataType>, nodeModel:  ISlTreeNodeModel<TDataType>);
+    remove(paths: number[][]);
 }
