@@ -14,13 +14,14 @@
         <div
           class="sl-vue-tree-cursor sl-vue-tree-cursor_before"
           @dragover.prevent
-          :style="{ visibility:
-            cursorPosition &&
-            cursorPosition.node.pathStr === node.pathStr &&
-            cursorPosition.placement === 'before' ?
-             'visible' :
-             'hidden'
-           }"
+          :style="{
+        'visibility': cursorPosition &&
+          cursorPosition.node.pathStr === node.pathStr &&
+          cursorPosition.placement === 'before' ?
+          'visible' :
+          'hidden',
+        '--depth': depth
+      }"
         >
           <!-- suggested place for node insertion  -->
         </div>
@@ -121,13 +122,13 @@
             class="sl-vue-tree-cursor sl-vue-tree-cursor_after"
             @dragover.prevent
             :style="{
-              visibility:
-               cursorPosition &&
-               cursorPosition.node.pathStr === node.pathStr &&
-               cursorPosition.placement === 'after' ?
-               'visible' :
-               'hidden'
-             }"
+        'visibility': cursorPosition &&
+          cursorPosition.node.pathStr === node.pathStr &&
+          cursorPosition.placement === 'after' ?
+          'visible' :
+          'hidden',
+        '--depth': depth
+      }"
         >
           <!-- suggested place for node insertion  -->
         </div>

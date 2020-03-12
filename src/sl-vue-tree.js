@@ -87,6 +87,10 @@ export default {
       return this.getParent().cursorPosition;
     },
 
+    depth() {
+      return this.gaps.length
+    },
+
     nodes() {
       if (this.isRoot) {
         const nodeModels = this.copy(this.currentValue);
