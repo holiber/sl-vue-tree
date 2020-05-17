@@ -197,6 +197,9 @@ slVueTree.traverse((node, nodeModel, path) => {
 [see CONTRIBUTING.md](CONTRIBUTING.md)
 
 # Changelog
+v1.8.5
+- fix d.ts https://github.com/holiber/sl-vue-tree/pull/77
+
 v1.8.4
 - added `insert` method https://github.com/holiber/sl-vue-tree/pull/39
 
