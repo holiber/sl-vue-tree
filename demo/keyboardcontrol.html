@@ -101,6 +101,12 @@
         const keyCode = event.code;
         const slVueTree = this.$refs.slVueTree;
 
+        if(slVueTree.selectionSize > 0){
+          if (keyCode === 'Delete') {
+            slVueTree.removeSelected();
+          }
+        }
+      
         if (slVueTree.selectionSize === 1) {
           const selectedNode = slVueTree.getSelected()[0];
           let nodeToSelect;
@@ -124,6 +130,7 @@
           slVueTree.select(slVueTree.getLastNode().path);
         }
       }
+
     }
   })
 </script>

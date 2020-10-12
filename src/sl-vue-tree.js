@@ -730,6 +730,15 @@ export default {
       this.emitInput(newNodes);
     },
 
+    removeSelected() {
+      const selectedNodesPaths = [];
+      this.traverse((node) => {
+        if (node.isSelected) selectedNodesPaths.push(node.path);
+      });
+
+      this.remove(selectedNodesPaths);
+    },
+
     insertModels(cursorPosition, nodeModels, newNodes) {
       const destNode = cursorPosition.node;
       const destSiblings = this.getNodeSiblings(newNodes, destNode.path);
