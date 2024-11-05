@@ -1,37 +1,38 @@
 # sl-vue-tree
 
-Customizable draggable tree component for Vue.js
+Customizable draggable tree component for Vue.js.
 
-![preview](preview.png)
+![Preview](preview.png)
 
-[demo](https://holiber.github.io/sl-vue-tree/demo/index)
+[Demo](https://holiber.github.io/sl-vue-tree/demo/index)
 
-install
+## Installation
 
-`npm i sl-vue-tree`
+```bash
+npm i sl-vue-tree
+```
 
+# Quick Start
 
-	
-# Quick start
-````html
-
+```html
 <div id="app">
-  <sl-vue-tree v-model="nodes"/>
+  <sl-vue-tree v-model="nodes" />
 </div>
 
 <link rel="stylesheet" href="dist/sl-vue-tree-dark.css">
 <script src="dist/sl-vue-tree.js"></script>
 
 <script>
-
   var nodes = [
-    {title: 'Item1', isLeaf: true},
-    {title: 'Item2', isLeaf: true, data: { visible: false }},
-    {title: 'Folder1'},
+    { title: 'Item1', isLeaf: true },
+    { title: 'Item2', isLeaf: true, data: { visible: false } },
+    { title: 'Folder1' },
     {
-      title: 'Folder2', isExpanded: true, children: [
-        {title: 'Item3', isLeaf: true},
-        {title: 'Item4', isLeaf: true}
+      title: 'Folder2',
+      isExpanded: true,
+      children: [
+        { title: 'Item3', isLeaf: true },
+        { title: 'Item4', isLeaf: true }
       ]
     }
   ];
@@ -40,194 +41,194 @@ install
     el: '#app',
     components: { SlVueTree },
     data: function () {
-     return {
-       nodes: nodes
-     }
+      return {
+        nodes: nodes
+      };
     }
   });
-  
-</script>    
-
-````
+</script>
+```
 
 The `value` property is an array of `ISlTreeNodeModel` nodes:
 
-````typescript
+```typescript
 interface ISlTreeNodeModel<TDataType> {
-    title: string;
-    isLeaf?: boolean;
-    children?: ISlTreeNodeModel<TDataType>[];
-    isExpanded?: boolean;
-    isSelected?: boolean;
-    isDraggable?: boolean;
-    isSelectable?: boolean;
-    data?: TDataType; // any serializable user data
+  title: string;
+  isLeaf?: boolean;
+  children?: ISlTreeNodeModel<TDataType>[];
+  isExpanded?: boolean;
+  isSelected?: boolean;
+  isDraggable?: boolean;
+  isSelectable?: boolean;
+  data?: TDataType; // any serializable user data
 }
-````
+```
 
-For convenience the component's events return `ISlTreeNode` objects. Those actually are `ISlTreeNodeModel`
-with some computed props:
-````typescript
+For convenience, the component's events return `ISlTreeNode` objects. These are actually `ISlTreeNodeModel` instances with some computed properties:
+
+```typescript
 interface ISlTreeNode<TDataType> extends ISlTreeNodeModel<TDataType> {
-    isFirstChild: boolean;
-    isLastChild: boolean;
-    isVisible: boolean;	// node is visible if all of its parents are expanded
-    level: number; // nesting level
-    ind: number; // index in the array of siblings 
-    path: number[]; // path to node as array of indexes, for example [2, 0, 1] in the example above is path to `Item4` 
-    pathStr: string; // serialized path to node
-    children: ISlTreeNode<TDataType>[];
+  isFirstChild: boolean;
+  isLastChild: boolean;
+  isVisible: boolean; // node is visible if all of its parents are expanded
+  level: number;      // nesting level
+  ind: number;        // index in the array of siblings
+  path: number[];     // path to node as an array of indexes, e.g., [2, 0, 1] is the path to `Item4` in the example above
+  pathStr: string;    // serialized path to node
+  children: ISlTreeNode<TDataType>[];
 }
-````
+```
 
-You can get the list of `ISlTreeNode` from the computed `slVueTree.nodes` property
-
-
+You can get the list of `ISlTreeNode` objects from the computed `slVueTree.nodes` property.
 
 # Props
 
-| prop             | type               | default                | description                                                                                                                                                                                              |
-|------------------|--------------------|------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| value            | ISlTreeNodeModel[] | []                     | An array of nodes to show. Each node is represented by `ISlTreeNodeModel` interface                                                                                                                              |
-| allowMultiselect | Boolean            | true                   | Disable or enable the multiselect feature                                                                                                                                                                |
-| allowToggleBranch | Boolean            | true                   | Disable or enable the expand/collapse button                                                                                                                                                                |
-| edgeSize         | Number             | 3                      | Offset in pixels from top and bottom for folder-node element. While dragging cursor is in that offset, the dragging node will be placed before or after the folder-node instead of being placed inside the folder. |
-| scrollAreaHeight | Number             | 70                     | Offset in pixels from top and bottom for the component element. While dragging cursor is in that area, the scrolling starts.                                                                                |
-| maxScrollSpeed   | Number             | 20                     | The scroll speed is relative to the cursor position. Defines the max scroll speed.             
-| multiselectKey   | String/String[] |['ctrlKey', 'metaKey'] | The keys for multiselect mode. Allowed values are ['ctrlKey', 'metaKey', 'altKey']   
+| Prop             | Type               | Default                | Description                                                                                                                                                                                                      |
+|------------------|--------------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| value            | ISlTreeNodeModel[] | `[]`                   | An array of nodes to display. Each node is represented by the `ISlTreeNodeModel` interface.                                                                                                                      |
+| allowMultiselect | Boolean            | `true`                 | Enables or disables the multiselect feature.                                                                                                                                                                     |
+| allowToggleBranch | Boolean           | `true`                 | Enables or disables the expand/collapse button.                                                                                                                                                                  |
+| edgeSize         | Number             | `3`                    | Offset in pixels from the top and bottom of a folder-node element. While dragging, if the cursor is within this offset, the dragged node will be placed before or after the folder-node instead of inside it.    |
+| scrollAreaHeight | Number             | `70`                   | Offset in pixels from the top and bottom of the component element. While dragging, if the cursor is within this area, scrolling starts.                                                                           |
+| maxScrollSpeed   | Number             | `20`                   | The maximum scroll speed. The scroll speed is relative to the cursor position.                                                                                                                                   |
+| multiselectKey   | String or String[] | `['ctrlKey', 'metaKey']` | The keys for enabling multiselect mode. Allowed values are `'ctrlKey'`, `'metaKey'`, `'altKey'`.                                                                                                                 |
 
-# Computed props
+# Computed Properties
 
-| prop           | type            | description                                                                                                                                                                                                                                                     |
-|----------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| nodes          | ISlTreeNode[]   | List of nodes with some computed props. See `ISlTreeNode` interface.                                                                                                                                                                                            |
-| cursorPosition | ICursorPosition | Represents the current cursor position that describes the action that will be applied to the dragged node on `mouseup` event. See `ICursorPosition` interface |
-| selectionSize  | Number          | The count of selected nodes
-| dragSize       | Number          | The count of selected and draggable nodes
-| isDragging     | Boolean         | True if nodes are dragging
+| Property       | Type                       | Description                                                                                                                                                     |
+|----------------|----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| nodes          | ISlTreeNode[]              | List of nodes with computed properties. See the `ISlTreeNode` interface.                                                                                        |
+| cursorPosition | ICursorPosition<TDataType> | Represents the current cursor position that describes the action to be applied to the dragged node on the `mouseup` event. See the `ICursorPosition` interface. |
+| selectionSize  | Number                     | The count of selected nodes.                                                                                                                                    |
+| dragSize       | Number                     | The count of selected and draggable nodes.                                                                                                                      |
+| isDragging     | Boolean                    | Indicates whether nodes are currently being dragged.                                                                                                            |
 
-````
+```typescript
 interface ICursorPosition<TDataType> {
   node: ISlTreeNode<TDataType>;
   placement: 'before' | 'inside' | 'after';
-}  
-````
+}
+```
 
 # Events
 
-| event           | callback arguments                                                         | description                                       |
-|-----------------|----------------------------------------------------------------------------|---------------------------------------------------|
-| input           | nodes: ISlTreeNodeModel[]                                                  | triggers for any changes to `value` property     |
-| select          | selectedNodes: ISlTreeNode[], event: MouseEvent                            | triggers when a node has been selected/deselected |
-| toggle          | toggledNode: ISlTreeNode, event: MouseEvent                                | triggers when a node has been collapsed/expanded  |
-| drop            | draggingNodes: ISlTreeNode[], position: ICursorPosition, event: MouseEvent | triggers when dragging nodes have been dropped    |
-| nodeclick       | node: ISlTreeNode, event: MouseEvent                                       | handle `click` event on node                      |
-| nodedblclick    | node: ISlTreeNode, event: MouseEvent                                       | handle `dblclick` event on node                   |
-| nodecontextmenu | node: ISlTreeNode, event: MouseEvent                                       | handle `contextmenu` event on node                |
-| externaldrop    | cursorPosition: ICursorPosition, event: MouseEvent                         | handle `drop` event for external items [demo](https://holiber.github.io/sl-vue-tree/demo/externaldrag)             |
+| Event           | Callback Arguments                                                          | Description                                          |
+|-----------------|------------------------------------------------------------------------------|------------------------------------------------------|
+| input           | `nodes: ISlTreeNodeModel[]`                                                 | Triggered whenever the `value` property changes.     |
+| select          | `selectedNodes: ISlTreeNode[]`, `event: MouseEvent`                         | Triggered when a node is selected or deselected.     |
+| toggle          | `toggledNode: ISlTreeNode`, `event: MouseEvent`                             | Triggered when a node is expanded or collapsed.      |
+| drop            | `draggingNodes: ISlTreeNode[]`, `position: ICursorPosition`, `event: MouseEvent` | Triggered when dragged nodes are dropped.            |
+| nodeclick       | `node: ISlTreeNode`, `event: MouseEvent`                                    | Handles the `click` event on a node.                 |
+| nodedblclick    | `node: ISlTreeNode`, `event: MouseEvent`                                    | Handles the `dblclick` event on a node.              |
+| nodecontextmenu | `node: ISlTreeNode`, `event: MouseEvent`                                    | Handles the `contextmenu` event on a node.           |
+| externaldrop    | `cursorPosition: ICursorPosition`, `event: MouseEvent`                      | Handles the `drop` event for external items. [Demo](https://holiber.github.io/sl-vue-tree/demo/externaldrag) |
 
 # Methods
 
-
-| method                                                                                                   | description                                                                                        |
-|----------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
-| getNode(path: number[]): ISlTreeNode                                                                     | Find the node by using its path                                                                   |
-| traverse(cb: (node: ISlTreeNode, nodeModel: ISlTreeNodeModel, siblings: ISlTreeNodeModel[])  => boolean) | Helpful method to traverse all nodes. The traversing will be stopped if callback returns `false`.  |
-| updateNode(path: number[], patch: Partial<ISlTreeNodeModel>)                                             | Update the node by using its path                                                                 |
-| select(path: number[], addToSelection = false)                                                           | Select the node by using its path                                                                 |                                                                                                                                              |
-| getNodeEl(): HTMLElement                                                                                 | Get the node HTMLElement by using its path                                                        |
-| getSelected(): ISlTreeNode[]                                                                             | Get selected nodes                                                                                 |
-| insert(position: ICursorPosition, nodeModel: ISlTreeNodeModel)                                           | Insert nodes by the current cursor position.                                                       |
-| remove(paths: number[][])                                                                                | Remove nodes by paths. For example `.remove([[0,1], [0,2]])`
-| getFirstNode(): ISlTreeNode                                                                              | Get the first node in the tree                                                                     |
-| getLastNode(): ISlTreeNode                                                                               | Get the last node in the tree
-| getNextNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>; | Get the next node. You can skip the next nodes by using `filter`
-| getPrevNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>; | Get the previous node. You can skip the previous nodes by using `filter`
+| Method                                                                                                        | Description                                                                                       |
+|---------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| getNode(path: number[]): ISlTreeNode                                                                          | Finds a node by its path.                                                                         |
+| traverse(callback: (node: ISlTreeNode, nodeModel: ISlTreeNodeModel, siblings: ISlTreeNodeModel[]) => boolean) | Traverses all nodes. Traversing stops if the callback returns `false`.                            |
+| updateNode(path: number[], patch: Partial<ISlTreeNodeModel>)                                                  | Updates a node by its path.                                                                       |
+| select(path: number[], addToSelection = false)                                                                | Selects a node by its path.                                                                       |
+| getNodeEl(path: number[]): HTMLElement                                                                        | Gets the node's HTMLElement by its path.                                                          |
+| getSelected(): ISlTreeNode[]                                                                                  | Gets the selected nodes.                                                                          |
+| insert(position: ICursorPosition, nodeModel: ISlTreeNodeModel)                                                | Inserts a node at the specified cursor position.                                                  |
+| remove(paths: number[][])                                                                                     | Removes nodes by their paths, e.g., `.remove([[0,1], [0,2]])`.                                    |
+| getFirstNode(): ISlTreeNode                                                                                   | Gets the first node in the tree.                                                                  |
+| getLastNode(): ISlTreeNode                                                                                    | Gets the last node in the tree.                                                                   |
+| getNextNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>       | Gets the next node. You can skip nodes by using the `filter` function.                            |
+| getPrevNode(path: number[], filter?: (node: ISlTreeNode<TDataType>) => boolean): ISlTreeNode<TDataType>       | Gets the previous node. You can skip nodes by using the `filter` function.                        |
 
 # Slots
 
-
-| slot       | context     | description                                                                                   |
-|------------|-------------|-----------------------------------------------------------------------------------------------|
-| title      | ISlTreeNode | Slot for item title                                                                           |
-| toggle     | ISlTreeNode | Slot for expand/collapse button                                                               |
-| sidebar    | ISlTreeNode | Sidebar content                                                                               |
-| draginfo   | SlVueTree   | Slot that follows the mouse cursor while dragging. By default shows the dragging nodes count. |
-| empty-node | ISlTreeNode | Slot for (optional) message when folder is open, but empty                                    |
-
-# IE 11 support
-
-You must add a [babel-polyfill](https://babeljs.io/docs/en/babel-polyfill) for it to work correctly in IE11  
-[See IE11 example](https://holiber.github.io/sl-vue-tree/demo/ie11test.html)
+| Slot        | Context       | Description                                                                                   |
+|-------------|---------------|-----------------------------------------------------------------------------------------------|
+| title       | ISlTreeNode   | Slot for customizing the item title.                                                          |
+| toggle      | ISlTreeNode   | Slot for the expand/collapse button.                                                          |
+| sidebar     | ISlTreeNode   | Slot for sidebar content.                                                                     |
+| draginfo    | SlVueTree     | Slot that follows the mouse cursor while dragging. By default, shows the count of dragging nodes. |
+| empty-node  | ISlTreeNode   | Slot for an optional message when a folder is open but empty.                                 |
 
 
 # Examples
 
+## Add a Folder or Item Icon via the `title` Slot
 
-## Add a folder or item icon via `title` slot
-````html
+```html
 <sl-vue-tree v-model="nodes">
-    <template slot="title" slot-scope="{ node }">
-
-      <span class="item-icon">
-        <i class="fa fa-file" v-if="node.isLeaf"></i>
-        <i class="fa fa-folder" v-if="!node.isLeaf"></i>
-      </span>
-    
-      {{ node.title }}
-      
-    </template>
+  <template slot="title" slot-scope="{ node }">
+    <span class="item-icon">
+      <i class="fa fa-file" v-if="node.isLeaf"></i>
+      <i class="fa fa-folder" v-else></i>
+    </span>
+    {{ node.title }}
+  </template>
 </sl-vue-tree>
+```
 
-````
-
-## Select all nodes
+## Select All Nodes
 
 ```javascript
 slVueTree.traverse((node, nodeModel, path) => {
-    Vue.set(nodeModel, 'isSelected', true);
-})
+  Vue.set(nodeModel, 'isSelected', true);
+});
 ```
 
-## Handle keydown and keyup events via `getNextNode` and `getPrevNode` methods
+## Handle `keydown` and `keyup` Events via `getNextNode` and `getPrevNode` Methods
 
-[demo](https://holiber.github.io/sl-vue-tree/demo/keyboardcontrol)
+[Demo](https://holiber.github.io/sl-vue-tree/demo/keyboardcontrol)
 
-## Contributing
-[see CONTRIBUTING.md](CONTRIBUTING.md)
+
+# IE11 Support
+
+You must include a [babel-polyfill](https://babeljs.io/docs/en/babel-polyfill) for the component to work correctly in IE11.
+
+[See IE11 Example](https://holiber.github.io/sl-vue-tree/demo/ie11test.html)
+
+# Contributing
+
+[See CONTRIBUTING.md](CONTRIBUTING.md)
 
 # Changelog
-v1.8.5
-- fix d.ts https://github.com/holiber/sl-vue-tree/pull/77
 
-v1.8.4
-- added `insert` method https://github.com/holiber/sl-vue-tree/pull/39
+## v1.8.5
 
-v1.8.3
-- Allow to disable or enable the expand/collapse button https://github.com/holiber/sl-vue-tree/pull/33
+- Fixed TypeScript definitions. See [#77](https://github.com/holiber/sl-vue-tree/pull/77).
 
-v1.8.1
-- added IE11 support https://github.com/holiber/sl-vue-tree/issues/17
+## v1.8.4
 
-v1.8.0
+- Added `insert` method. See [#39](https://github.com/holiber/sl-vue-tree/pull/39).
 
-- added `empty-node` slot
+## v1.8.3
 
-v1.7.1
+- Enabled the ability to disable or enable the expand/collapse button. See [#33](https://github.com/holiber/sl-vue-tree/pull/33).
 
-- added `multiselectKey` property
+## v1.8.1
 
-v1.7.0
+- Added IE11 support. See [#17](https://github.com/holiber/sl-vue-tree/issues/17).
 
-- added `isSelectable` and `isDraggable` flags
+## v1.8.0
 
-v1.6.0
+- Added `empty-node` slot.
 
-- added `getNextNode` and `getPrevNode` methods https://github.com/holiber/sl-vue-tree/issues/6
+## v1.7.1
 
-v1.5.1
-- improve drop on the bottom of tree https://github.com/holiber/sl-vue-tree/issues/5
+- Added `multiselectKey` property.
 
-v1.5.0
-- `SlVueTree.select` method added
-- `SlVueTree.@nodeclick` event fixed
+## v1.7.0
+
+- Added `isSelectable` and `isDraggable` flags.
+
+## v1.6.0
+
+- Added `getNextNode` and `getPrevNode` methods. See [#6](https://github.com/holiber/sl-vue-tree/issues/6).
+
+## v1.5.1
+
+- Improved dropping at the bottom of the tree. See [#5](https://github.com/holiber/sl-vue-tree/issues/5).
+
+## v1.5.0
+
+- Added `SlVueTree.select` method.
+- Fixed `SlVueTree.@nodeclick` event.
