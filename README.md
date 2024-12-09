@@ -12,6 +12,9 @@ Customizable draggable tree component for Vue.js.
 npm i sl-vue-tree
 ```
 
+# Vue3 Support
+Support for Vue3 coming soon. Check out [sl-vue-tree-next](https://github.com/kcsujeet/sl-vue-tree-next) while that is being shaped up.
+
 # Quick Start
 
 ```html
